@@ -1,7 +1,7 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.entities.CustomersEntity;
-import com.sparta.lt.northwindrest.entities.ProductsEntity;
+import com.sparta.lt.northwindrest.entities.CustomerEntity;
+import com.sparta.lt.northwindrest.entities.ProductEntity;
 import com.sparta.lt.northwindrest.repositories.CustomerRepository;
 import com.sparta.lt.northwindrest.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,13 @@ public class NorthwindController {
     }
 
     @GetMapping("/products")
-    public List<ProductsEntity> getAllProducts() {
+    public List<ProductEntity> getAllProducts() {
         return productRepository.findAll();
     }
 
     @GetMapping("/customers")
     @ResponseBody
-    public List<CustomersEntity> getAllCustomers(@RequestParam(required = false) String name) {
+    public List<CustomerEntity> getCustomers(@RequestParam(required = false) String name) {
         if (name == null) {
             return customerRepository.findAll();
         }
@@ -40,7 +40,7 @@ public class NorthwindController {
     }
 
     @GetMapping("/products/{id}")
-    public Optional<ProductsEntity> getProductsById(@PathVariable Integer id) {
+    public Optional<ProductEntity> getProductsById(@PathVariable Integer id) {
         return productRepository.findById(id);
     }
 }

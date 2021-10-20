@@ -1,16 +1,17 @@
 package com.sparta.lt.northwindrest.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = "customers")
+@Table(name = "suppliers", indexes = {
+        @Index(name = "CompanyName", columnList = "CompanyName"),
+        @Index(name = "PostalCode", columnList = "PostalCode")
+})
 @Entity
-public class CustomersEntity {
+public class SupplierEntity {
     @Id
-    @Column(name = "CustomerID", nullable = false, length = 5)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SupplierID", nullable = false)
+    private Integer id;
 
     private String companyName;
 
@@ -32,26 +33,16 @@ public class CustomersEntity {
 
     private String fax;
 
-    private byte[] image;
+    private String homePage;
 
-    private byte[] imageThumbnail;
-
-    @Column(name = "ImageThumbnail")
-    public byte[] getImageThumbnail() {
-        return imageThumbnail;
+    @Lob
+    @Column(name = "HomePage")
+    public String getHomePage() {
+        return homePage;
     }
 
-    public void setImageThumbnail(byte[] imageThumbnail) {
-        this.imageThumbnail = imageThumbnail;
-    }
-
-    @Column(name = "Image")
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setHomePage(String homePage) {
+        this.homePage = homePage;
     }
 
     @Column(name = "Fax", length = 24)
@@ -144,11 +135,11 @@ public class CustomersEntity {
         this.companyName = companyName;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }
