@@ -19,14 +19,12 @@ import java.util.stream.Collectors;
 public class NorthwindController {
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
-    private final OrderRepository orderRepository;
+
 
     @Autowired
-    public NorthwindController(CustomerRepository customerRepository, ProductRepository productRepository,
-                               OrderRepository orderRepository) {
+    public NorthwindController(CustomerRepository customerRepository, ProductRepository productRepository) {
         this.productRepository = productRepository;
         this.customerRepository = customerRepository;
-        this.orderRepository = orderRepository;
     }
 
     @GetMapping("/products")
@@ -49,35 +47,5 @@ public class NorthwindController {
     @GetMapping("/products/{id}")
     public Optional<ProductEntity> getProductsById(@PathVariable Integer id) {
         return productRepository.findById(id);
-    }
-
-
-    //<-------- Orders Mapping starts here ------->
-    @GetMapping("/orders")
-    public List<OrderEntity> getOrders() {
-        return new OrderController(orderRepository).getOrders();
-    }
-
-    @GetMapping("orders/{orderID}")
-    public Optional<OrderEntity> getOrderByID(@PathVariable Integer orderID) {
-        return new OrderController(orderRepository).getOrderByID(orderID);
-    }
-
-    @GetMapping("orders/customer/{customerID}")
-    public List<OrderEntity> getOrdersByCustomerID(@PathVariable String customerID) {
-        return new OrderController(orderRepository).getOrdersCustomerID(customerID);
-    }
-
-    @GetMapping("orders/location")
-    public List<OrderEntity> getOrdersByRegionAndCountry(
-            @RequestParam String country, @RequestParam(required = false) String region) {
-        return new OrderController(orderRepository).getOrdersByCountryAndRegion(country, region);
-    }
-
-    @GetMapping("orders/date")
-    public List<OrderEntity> getOrdersByOrderDateAndShippedDate(
-            @RequestParam String orderDate, @RequestParam(required = false) String shippedDate) {
-        return new OrderController(orderRepository).getOrdersByDate(orderDate, shippedDate);
-
     }
 }
