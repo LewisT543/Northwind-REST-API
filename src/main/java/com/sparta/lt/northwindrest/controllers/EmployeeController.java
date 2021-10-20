@@ -20,12 +20,12 @@ public class EmployeeController {
         this.employeeRepository = employeeRepository;
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/northwind/employees")
     public List<EmployeeEntity> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/northwind/employees")
     public List<EmployeeEntity> getEmployeesByFirstName(@RequestParam String firstName) {
         return employeeRepository.findAll()
                 .stream()
@@ -33,7 +33,7 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/northwind/employees")
     public List<EmployeeEntity> getEmployeesByLastName(@RequestParam String lastName) {
         return employeeRepository.findAll()
                 .stream()
@@ -41,7 +41,7 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/northwind/employees")
     public List<EmployeeEntity> getEmployeesByCountry(@RequestParam String country) {
         return employeeRepository.findAll()
                 .stream()
@@ -49,7 +49,7 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/northwind/employees")
     @ResponseBody
     public List<EmployeeEntity> getEmployeesByFirstNameAndCountry(@RequestParam String firstName,
                                                                   @RequestParam(required=false) String country) {
@@ -65,7 +65,7 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/northwind/employees")
     @ResponseBody
     public List<EmployeeEntity> getEmployeesByLastNameAndCountry(@RequestParam String lastName,
                                                                  @RequestParam(required=false) String country) {
@@ -81,7 +81,7 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/northwind/employees")
     @ResponseBody
     public List<EmployeeEntity> getEmployeesByFirstAndLastName(@RequestParam(required=false) String firstName,
                                                                @RequestParam String lastName) {

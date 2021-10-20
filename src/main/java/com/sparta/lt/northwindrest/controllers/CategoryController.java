@@ -19,12 +19,12 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/northwind/categories")
     public List<CategoryEntity> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-    @GetMapping("/categories/{categoryId}")
+    @GetMapping("/northwind/categories/{categoryId}")
     public Optional<CategoryEntity> getCategoriesById(@PathVariable Integer categoryId) {
         return categoryRepository.findById(categoryId);
     }

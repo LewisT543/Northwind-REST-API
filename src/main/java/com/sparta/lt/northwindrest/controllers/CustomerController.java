@@ -18,7 +18,7 @@ public class CustomerController {
         this.customerRepository = customerRepository;
     }
 
-    @GetMapping("/customer")
+    @GetMapping("/northwind/customer")
     @ResponseBody
     public List<CustomerEntity> getAllCustomers(@RequestParam(required=false) String name,
                                                 @RequestParam(required=false) String country) {
@@ -41,7 +41,7 @@ public class CustomerController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("/northwind/customers/{customerId}")
     public Optional<CustomerEntity> getCustomersById(@PathVariable String customerId) {
         return customerRepository.findById(customerId);
     }
