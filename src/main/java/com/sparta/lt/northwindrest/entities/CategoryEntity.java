@@ -2,9 +2,7 @@ package com.sparta.lt.northwindrest.entities;
 
 import javax.persistence.*;
 
-@Table(name = "categories", indexes = {
-        @Index(name = "CategoryName", columnList = "CategoryName", unique = true)
-})
+@Table(name = "categories")
 @Entity
 public class CategoryEntity {
     @Id
