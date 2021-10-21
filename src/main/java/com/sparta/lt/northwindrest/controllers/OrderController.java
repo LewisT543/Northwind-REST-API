@@ -8,43 +8,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 @RestController
 public class OrderController {
     private final OrderRepository orderRepository;
-    private static final String DB_NAME = "/northwind";
 
     @Autowired
     public OrderController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    @GetMapping(DB_NAME+"/orders")
+    @GetMapping("/orders")
     public List<OrderEntity> getOrders() {
         return orderRepository.findAll();
     }
 
-    @GetMapping(DB_NAME+"orders/{orderID}")
+    @GetMapping("orders/{orderID}")
     public Optional<OrderEntity> getOrderByID(Integer orderID) {
         return orderRepository.findById(orderID);
     }
 
-    @GetMapping(DB_NAME+"orders/customer/{customerID}")
+    @GetMapping("orders/customer/{customerID}")
     public List<OrderEntity> getOrdersCustomerID(String customerID) {
         return orderRepository.findAll()
                 .stream()
-                .filter((o) -> o.getCustomerID().contains(customerID))
+                .filter((o) -> o.getCustomerID().equals(customerID))
                 .collect(Collectors.toList());
     }
 
     //TODO: Null handling
-    @GetMapping(DB_NAME+"orders/location")
+    @GetMapping("orders/location")
     public List<OrderEntity> getOrdersByCountryAndRegion(String country, String region) {
         if (country != null && region != null) {
             List<OrderEntity> results = new ArrayList<>();
@@ -64,7 +61,7 @@ public class OrderController {
         } else return null;
     }
 
-    @GetMapping(DB_NAME+"orders/date")
+    @GetMapping("orders/date")
     public List<OrderEntity> getOrdersByDate(String orderDate, String shippedDate) {
         if (orderDate != null && shippedDate != null) {
             List<OrderEntity> results = new ArrayList<>();

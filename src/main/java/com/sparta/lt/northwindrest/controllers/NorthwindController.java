@@ -1,17 +1,13 @@
 package com.sparta.lt.northwindrest.controllers;
 
 import com.sparta.lt.northwindrest.entities.CustomerEntity;
-import com.sparta.lt.northwindrest.entities.OrderEntity;
 import com.sparta.lt.northwindrest.entities.ProductEntity;
 import com.sparta.lt.northwindrest.repositories.CustomerRepository;
-import com.sparta.lt.northwindrest.repositories.OrderRepository;
 import com.sparta.lt.northwindrest.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

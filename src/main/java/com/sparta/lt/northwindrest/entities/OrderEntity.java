@@ -6,9 +6,7 @@ import java.time.Instant;
 
 @Table(name = "orders", indexes = {
         @Index(name = "ShippedDate", columnList = "ShippedDate"),
-        @Index(name = "CustomerID", columnList = "CustomerID"),
         @Index(name = "ShipPostalCode", columnList = "ShipPostalCode"),
-        @Index(name = "EmployeeID", columnList = "EmployeeID"),
         @Index(name = "OrderDate", columnList = "OrderDate")
 })
 @Entity
@@ -18,9 +16,9 @@ public class OrderEntity {
     @Column(name = "OrderID", nullable = false)
     private Integer id;
 
-    private String customerID;
+    private CustomerEntity customerID;
 
-    private Integer employeeID;
+    private EmployeeEntity employeeID;
 
     private Instant orderDate;
 
@@ -28,7 +26,7 @@ public class OrderEntity {
 
     private Instant shippedDate;
 
-    private Integer shipVia;
+    private ShipperEntity shipVia;
 
     private BigDecimal freight;
 
@@ -98,7 +96,7 @@ public class OrderEntity {
         this.shipName = shipName;
     }
 
-    @Column(name = "Freight", precision = 19, scale = 4)
+    @Column(name = "Freight", precision = 10, scale = 4)
     public BigDecimal getFreight() {
         return freight;
     }
@@ -107,12 +105,13 @@ public class OrderEntity {
         this.freight = freight;
     }
 
-    @Column(name = "ShipVia")
-    public Integer getShipVia() {
+    @ManyToOne
+    @JoinColumn(name = "ShipVia")
+    public ShipperEntity getShipVia() {
         return shipVia;
     }
 
-    public void setShipVia(Integer shipVia) {
+    public void setShipVia(ShipperEntity shipVia) {
         this.shipVia = shipVia;
     }
 
@@ -143,21 +142,23 @@ public class OrderEntity {
         this.orderDate = orderDate;
     }
 
-    @Column(name = "EmployeeID")
-    public Integer getEmployeeID() {
+    @ManyToOne
+    @JoinColumn(name = "EmployeeID")
+    public EmployeeEntity getEmployeeID() {
         return employeeID;
     }
 
-    public void setEmployeeID(Integer employeeID) {
+    public void setEmployeeID(EmployeeEntity employeeID) {
         this.employeeID = employeeID;
     }
 
-    @Column(name = "CustomerID", length = 5)
-    public String getCustomerID() {
+    @ManyToOne
+    @JoinColumn(name = "CustomerID")
+    public CustomerEntity getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(String customerID) {
+    public void setCustomerID(CustomerEntity customerID) {
         this.customerID = customerID;
     }
 
