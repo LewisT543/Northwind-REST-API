@@ -1,10 +1,12 @@
 package com.sparta.lt.northwindrest.data.dtos;
 
+import java.math.BigDecimal;
+
 public class ProductDTO {
     private String productName;
     private int supplierId;
     private int categoryId;
-    private double unitPrice;
+    private BigDecimal unitPrice;
     private int unitsInStock;
     private int unitsOnOrder;
     private int reorderLevel;
@@ -34,11 +36,11 @@ public class ProductDTO {
         this.categoryId = categoryId;
     }
 
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

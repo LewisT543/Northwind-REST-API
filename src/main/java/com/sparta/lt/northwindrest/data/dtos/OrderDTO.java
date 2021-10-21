@@ -1,10 +1,12 @@
 package com.sparta.lt.northwindrest.data.dtos;
 
+import java.math.BigDecimal;
+
 public class OrderDTO {
     private String customerId;
     private String orderDate;
     private int employeeId;
-    private double freight;
+    private BigDecimal freight;
     private String shipCompanyName;
     private String shipCountry;
 
@@ -32,11 +34,11 @@ public class OrderDTO {
         this.employeeId = employeeId;
     }
 
-    public double getFreight() {
+    public BigDecimal getFreight() {
         return freight;
     }
 
-    public void setFreight(double freight) {
+    public void setFreight(BigDecimal freight) {
         this.freight = freight;
     }
 

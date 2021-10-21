@@ -1,59 +1,48 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.entities.CustomerEntity;
+import com.sparta.lt.northwindrest.data.dtos.CustomerDTO;
+import com.sparta.lt.northwindrest.data.mappingservices.CustomerMapService;
 import com.sparta.lt.northwindrest.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
-    private final CustomerRepository customerRepository;
+    private final CustomerMapService customerMapService;
 
     @Autowired
-    CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    CustomerController(CustomerMapService customerMapService) {
+        this.customerMapService = customerMapService;
     }
 
     @GetMapping("/northwind/customers")
-    public List<CustomerEntity> getAllCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> getAllCustomers() {
+        return customerMapService.getAllCustomerDTO();
     }
 
     @GetMapping(value="/northwind/customers", params={"name"})
     @ResponseBody
-    public List<CustomerEntity> getCustomersByName(@RequestParam String name) {
-        return customerRepository.findAll()
-                .stream()
-                .filter(customerEntity -> customerEntity.getContactName().contains(name))
-                .collect(Collectors.toList());
+    public List<CustomerDTO> getCustomersByName(@RequestParam String name) {
+        return customerMapService.getCustomersByName(name);
     }
 
     @GetMapping(value="/northwind/customers", params={"country"})
     @ResponseBody
-    public List<CustomerEntity> getCustomersByCountry(@RequestParam String country) {
-        return customerRepository.findAll()
-                .stream()
-                .filter(customerEntity -> customerEntity.getCountry().contains(country))
-                .collect(Collectors.toList());
+    public List<CustomerDTO> getCustomersByCountry(@RequestParam String country) {
+        return customerMapService.getCustomersByCountry(country);
     }
 
     @GetMapping(value="/northwind/customers", params={"name", "country"})
     @ResponseBody
-    public List<CustomerEntity> getCustomersByNameAndCountry(@RequestParam String name,
-                                                             @RequestParam String country) {
-        return customerRepository.findAll()
-                .stream()
-                .filter(customerEntity -> customerEntity.getContactName().contains(name))
-                .filter(customerEntity -> customerEntity.getCountry().contains(country))
-                .collect(Collectors.toList());
+    public List<CustomerDTO> getCustomersByNameAndCountry(@RequestParam String name,
+                                                          @RequestParam String country) {
+        return customerMapService.getCustomersByNameAndCountry(name, country);
     }
 
     @GetMapping("/northwind/customers/{customerId}")
-    public Optional<CustomerEntity> getCustomersById(@PathVariable String customerId) {
-        return customerRepository.findById(customerId);
+    public CustomerDTO getCustomersById(@PathVariable String customerId) {
+        return customerMapService.getCustomersById(customerId);
     }
 }

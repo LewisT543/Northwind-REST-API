@@ -1,5 +1,6 @@
 package com.sparta.lt.northwindrest.controllers;
 
+import com.sparta.lt.northwindrest.data.mappingservices.SupplierMapService;
 import com.sparta.lt.northwindrest.entities.SupplierEntity;
 import com.sparta.lt.northwindrest.repositories.SupplierRepository;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 @RestController
 public class SupplierController {
     private final SupplierRepository supplierRepository;
+    private final SupplierMapService supplierMapService;
 
     @Autowired
-    public SupplierController(SupplierRepository supplierRepository) {
+    public SupplierController(SupplierRepository supplierRepository, SupplierMapService supplierMapService) {
         this.supplierRepository = supplierRepository;
+        this.supplierMapService = supplierMapService;
     }
 
     @GetMapping("/northwind/suppliers")

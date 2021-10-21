@@ -1,5 +1,6 @@
 package com.sparta.lt.northwindrest.controllers;
 
+import com.sparta.lt.northwindrest.data.mappingservices.ProductMapService;
 import com.sparta.lt.northwindrest.entities.ProductEntity;
 import com.sparta.lt.northwindrest.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 @RestController
 public class ProductController {
     private final ProductRepository productRepository;
+    private final ProductMapService productMapService;
 
     @Autowired
-    public ProductController(ProductRepository productRepository){
+    public ProductController(ProductRepository productRepository, ProductMapService productMapService){
         this.productRepository = productRepository;
+        this.productMapService = productMapService;
     }
 
     @GetMapping("/northwind/products")

@@ -1,9 +1,12 @@
 package com.sparta.lt.northwindrest.controllers;
 
 
+import com.sparta.lt.northwindrest.data.mappingservices.EmployeeMapService;
+import com.sparta.lt.northwindrest.data.mappingservices.OrderMapService;
 import com.sparta.lt.northwindrest.entities.OrderEntity;
 import com.sparta.lt.northwindrest.repositories.OrderRepository;
 import com.sparta.lt.northwindrest.util.Util;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +21,13 @@ import java.util.stream.Collectors;
 @RestController
 public class OrderController {
     private final OrderRepository orderRepository;
+    private final OrderMapService orderMapService;
     private static final String DB_NAME = "/northwind";
 
     @Autowired
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository, OrderMapService orderMapService) {
         this.orderRepository = orderRepository;
+        this.orderMapService = orderMapService;
     }
 
     @GetMapping(DB_NAME+"/orders")
