@@ -24,7 +24,7 @@ public class SupplierController {
     // TODO: change what happens when params aren't valid
     // TODO: change how this works because logic is jank
     @GetMapping("/northwind/suppliers")
-    public List<SupplierEntity> getSuppliers(@RequestParam(required=false) Map<String,String> params) {
+    public List<SupplierEntity> getSuppliersWithLocation(@RequestParam(required=false) Map<String,String> params) {
         System.out.println(params.entrySet());
 
         if(params.size() == 0) {
@@ -55,6 +55,17 @@ public class SupplierController {
         }
 
         return suppliers;
+    }
+
+    @GetMapping(value="/northwind/suppliers", params = {"title"})
+    public List<SupplierEntity> getSuppliersByTitle(@RequestParam(required = false) String title) {
+        if(title == null) {
+            return supplierRepository.findAll();
+        }
+        return supplierRepository.findAll()
+                .stream()
+                .filter(supplierEntity -> supplierEntity.getContactTitle().equalsIgnoreCase(title))
+                .collect(Collectors.toList());
     }
 
     // jesus don't look at this
