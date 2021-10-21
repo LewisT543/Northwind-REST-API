@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class EmployeeController {
-    /*private EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     public EmployeeController(EmployeeRepository employeeRepository) {
@@ -95,5 +95,5 @@ public class EmployeeController {
                 .filter(employeeEntity -> employeeEntity.getFirstName().contains(firstName)
                         && employeeEntity.getLastName().contains(lastName))
                 .collect(Collectors.toList());
-    }*/
+    }
 }

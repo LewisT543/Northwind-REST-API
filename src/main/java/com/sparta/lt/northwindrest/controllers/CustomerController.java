@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
-    /*private final CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
     CustomerController(CustomerRepository customerRepository) {
@@ -44,5 +44,5 @@ public class CustomerController {
     @GetMapping("/northwind/customers/{customerId}")
     public Optional<CustomerEntity> getCustomersById(@PathVariable String customerId) {
         return customerRepository.findById(customerId);
-    }*/
+    }
 }
