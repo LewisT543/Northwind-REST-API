@@ -1,6 +1,8 @@
 package com.sparta.lt.northwindrest.controllers;
 
+import com.sparta.lt.northwindrest.dto.SupplierDTO;
 import com.sparta.lt.northwindrest.entities.SupplierEntity;
+import com.sparta.lt.northwindrest.mappers.SupplierMapService;
 import com.sparta.lt.northwindrest.repositories.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,58 +16,58 @@ import java.util.stream.Collectors;
 @RestController
 public class SupplierController {
 
-    private final SupplierRepository supplierRepository;
-
     @Autowired
-    public SupplierController(SupplierRepository supplierRepository) {
-        this.supplierRepository = supplierRepository;
-    }
+    private SupplierMapService supplierMapService;
 
     // TODO: change what happens when params aren't valid
     // TODO: change how this works because logic is jank
-    @GetMapping("/northwind/suppliers")
-    public List<SupplierEntity> getSuppliersWithLocation(@RequestParam(required=false) Map<String,String> params) {
-        System.out.println(params.entrySet());
-
-        if(params.size() == 0) {
-            return supplierRepository.findAll();
-        }
-
-        List<SupplierEntity> suppliers = new ArrayList<>();
-
-        if(params.containsKey("city")) {
-            supplierRepository.findAll()
-                    .stream()
-                    .filter(supplierEntity -> supplierEntity.getCity().equalsIgnoreCase(params.get("city")))
-                    .forEach(suppliers::add);
-        }
-
-        if(params.containsKey("country")) {
-            supplierRepository.findAll()
-                    .stream()
-                    .filter(supplierEntity -> supplierEntity.getCountry().equalsIgnoreCase(params.get("country")))
-                    .forEach(suppliers::add);
-        }
-
-        if(params.containsKey("postCode")) {
-            supplierRepository.findAll()
-                    .stream()
-                    .filter(supplierEntity -> supplierEntity.getPostalCode().equalsIgnoreCase(params.get("postCode")))
-                    .forEach(suppliers::add);
-        }
-
-        return suppliers;
+    @GetMapping("/northwind/supplier/{supplierID}")
+    public List<SupplierDTO> getSupplierByID(@PathVariable Optional<Integer> supplierID) {
+        if (supplierID.isPresent())
+            return supplierMapService.getAllSuppliers();
+        else return null;
     }
 
-    @GetMapping(value="/northwind/suppliers", params = {"title"})
-    public List<SupplierEntity> getSuppliersByTitle(@RequestParam(required = false) String title) {
-        if(title == null) {
-            return supplierRepository.findAll();
+    @GetMapping("northwind/supplier")
+    public List<SupplierDTO> sortSuppliersByRegionCountryCity(
+            @RequestParam String country, @RequestParam(required = false) String city,
+            @RequestParam(required = false) String postCode) {
+
+        List<SupplierDTO> suppliers = new ArrayList();
+
+        if (city == null && postCode == null) {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getCountry() != null && s.getCountry().equals(country)) {
+                    suppliers.add(s);
+                }
+            }
+        } else if (city != null && postCode == null) {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getCity() != null && s.getCountry() != null) {
+                    if (s.getCountry().equals(country) && s.getCity().equals(city)) {
+                        suppliers.add(s);
+                    }
+                }
+            }
+        } else if (city == null) {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getPostalCode() != null && s.getCountry() != null) {
+                    if (s.getCountry().equals(country) && s.getPostalCode().equals(postCode)) {
+                        suppliers.add(s);
+                    }
+                }
+            }
+        } else {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getPostalCode() != null && s.getCity() != null && s.getPostalCode() != null) {
+                    if (s.getCountry().equals(country) && s.getCity().equals(city)
+                            && s.getPostalCode().equals(postCode)) {
+                        suppliers.add(s);
+                    }
+                }
+            }
         }
-        return supplierRepository.findAll()
-                .stream()
-                .filter(supplierEntity -> supplierEntity.getContactTitle().equalsIgnoreCase(title))
-                .collect(Collectors.toList());
+        return suppliers;
     }
 
     // jesus don't look at this
@@ -117,13 +119,18 @@ public class SupplierController {
         }
     }*/
 
-    // TODO: change return type to optional maybe? depends if companyName is unique or not
-    @GetMapping("/northwind/suppliers/{companyName}")
-    public List<SupplierEntity> getSuppliersWithCompanyName(@PathVariable String companyName) {
-        return supplierRepository.findAll()
-                .stream()
-                .filter(supplierEntity -> supplierEntity.getCompanyName().equalsIgnoreCase(companyName))
-                .collect(Collectors.toList());
+    //TODO: change return type to optional maybe? depends if companyName is unique or not
+    @GetMapping(value = "/northwind/suppliers", params = {"name"})
+    public List<SupplierDTO> getSuppliersWithCompanyName(@RequestParam String name) {
+        List<SupplierDTO> suppliers = new ArrayList<>();
+
+        for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+            if (s.getCompanyName() != null && s.getCompanyName().equals(name)) {
+                suppliers.add(s);
+            }
+        }
+
+        return suppliers;
     }
 
 

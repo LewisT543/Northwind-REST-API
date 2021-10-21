@@ -30,12 +30,12 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
-    @GetMapping(DB_NAME+"orders/{orderID}")
+    @GetMapping(DB_NAME+"/orders/{orderID}")
     public Optional<OrderEntity> getOrderByID(Integer orderID) {
         return orderRepository.findById(orderID);
     }
 
-    @GetMapping(DB_NAME+"orders/customer/{customerID}")
+    @GetMapping(DB_NAME+"/orders/customer/{customerID}")
     public List<OrderEntity> getOrdersCustomerID(String customerID) {
         return orderRepository.findAll()
                 .stream()
@@ -44,7 +44,7 @@ public class OrderController {
     }
 
     //TODO: Null handling
-    @GetMapping(DB_NAME+"orders/location")
+    @GetMapping(DB_NAME+"/orders/location")
     public List<OrderEntity> getOrdersByCountryAndRegion(String country, String region) {
         if (country != null && region != null) {
             List<OrderEntity> results = new ArrayList<>();
@@ -64,7 +64,7 @@ public class OrderController {
         } else return null;
     }
 
-    @GetMapping(DB_NAME+"orders/date")
+    @GetMapping(DB_NAME+"/orders/date")
     public List<OrderEntity> getOrdersByDate(String orderDate, String shippedDate) {
         if (orderDate != null && shippedDate != null) {
             List<OrderEntity> results = new ArrayList<>();
