@@ -1,6 +1,5 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.entities.ProductEntity;
 import com.sparta.lt.northwindrest.entities.ShipperEntity;
 import com.sparta.lt.northwindrest.repositories.ShipperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,9 @@ public class ShipperController {
     }
 
     // TODO: implement what happens when optional is null
-    @GetMapping("/northwind/shippers/{id}")
-    public Optional<ShipperEntity> getShippersById(@PathVariable Integer id) {
-        return shipperRepository.findById(id);
+    @GetMapping("/northwind/shippers/{shipperId}")
+    public Optional<ShipperEntity> getShippersById(@PathVariable Integer shipperId) {
+        return shipperRepository.findById(shipperId);
     }
 
 }
