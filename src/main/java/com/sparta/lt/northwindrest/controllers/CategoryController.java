@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class CategoryController {
@@ -25,7 +25,10 @@ public class CategoryController {
     }
 
     @GetMapping("/northwind/categories/{categoryId}")
-    public Optional<CategoryEntity> getCategoriesById(@PathVariable Integer categoryId) {
-        return categoryRepository.findById(categoryId);
+    public List<CategoryEntity> getCategoriesById(@PathVariable Integer categoryId) {
+        return categoryRepository.findAll()
+                .stream()
+                .filter(categoryEntity -> categoryEntity.getId().equals(categoryId))
+                .collect(Collectors.toList());
     }
 }

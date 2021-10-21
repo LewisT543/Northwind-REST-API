@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 public class EmployeeController {
-    private EmployeeMapService employeeMapService;
+    private final EmployeeMapService employeeMapService;
 
     @Autowired
     public EmployeeController(EmployeeMapService employeeMapService) {

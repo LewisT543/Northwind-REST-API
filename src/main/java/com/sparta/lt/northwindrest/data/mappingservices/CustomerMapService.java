@@ -47,10 +47,12 @@ public class CustomerMapService {
                 .collect(Collectors.toList());
     }
 
-    public CustomerDTO getCustomersById(String customerId) {
-        if (customerRepository.findById(customerId).isPresent())
-            return convertCustomerEntityToCustomerDTO(customerRepository.findById(customerId).get());
-        return null;
+    public List<CustomerDTO> getCustomersById(String customerId) {
+        return customerRepository.findAll()
+                .stream()
+                .filter(customerEntity -> customerEntity.getId().equals(customerId))
+                .map(this::convertCustomerEntityToCustomerDTO)
+                .collect(Collectors.toList());
     }
 
     private CustomerDTO convertCustomerEntityToCustomerDTO(CustomerEntity customer) {

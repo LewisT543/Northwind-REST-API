@@ -1,12 +1,21 @@
 package com.sparta.lt.northwindrest.data.dtos;
 
 public class EmployeeDTO {
+    private Integer employeeId;
     private String title;
     private String fName;
     private String lName;
     private String companyTitle;
     private String city;
     private String country;
+
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public String getTitle() {
         return title;

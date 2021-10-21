@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class ShipperController {
@@ -27,8 +27,11 @@ public class ShipperController {
 
     // TODO: implement what happens when optional is null
     @GetMapping("/northwind/shippers/{shipperId}")
-    public Optional<ShipperEntity> getShippersById(@PathVariable Integer shipperId) {
-        return shipperRepository.findById(shipperId);
+    public List<ShipperEntity> getShippersById(@PathVariable Integer shipperId) {
+        return shipperRepository.findAll()
+                .stream()
+                .filter(shipperEntity -> shipperEntity.getId().equals(shipperId))
+                .collect(Collectors.toList());
     }
 
 }

@@ -2,7 +2,6 @@ package com.sparta.lt.northwindrest.controllers;
 
 import com.sparta.lt.northwindrest.data.dtos.CustomerDTO;
 import com.sparta.lt.northwindrest.data.mappingservices.CustomerMapService;
-import com.sparta.lt.northwindrest.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +41,7 @@ public class CustomerController {
     }
 
     @GetMapping("/northwind/customers/{customerId}")
-    public CustomerDTO getCustomersById(@PathVariable String customerId) {
+    public List<CustomerDTO> getCustomersById(@PathVariable String customerId) {
         return customerMapService.getCustomersById(customerId);
     }
 }

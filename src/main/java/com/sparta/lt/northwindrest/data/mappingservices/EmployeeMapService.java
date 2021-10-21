@@ -1,14 +1,10 @@
 package com.sparta.lt.northwindrest.data.mappingservices;
 
-import com.sparta.lt.northwindrest.data.dtos.CustomerDTO;
 import com.sparta.lt.northwindrest.data.dtos.EmployeeDTO;
 import com.sparta.lt.northwindrest.entities.EmployeeEntity;
 import com.sparta.lt.northwindrest.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -87,6 +83,7 @@ public class EmployeeMapService {
 
     private EmployeeDTO convertEmployeeEntityToEmployeeDTO(EmployeeEntity employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setEmployeeId(employee.getId());
         employeeDTO.setTitle(employee.getTitle());
         employeeDTO.setfName(employee.getFirstName());
         employeeDTO.setlName(employee.getLastName());
