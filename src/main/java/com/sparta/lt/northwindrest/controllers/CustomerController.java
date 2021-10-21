@@ -18,26 +18,37 @@ public class CustomerController {
         this.customerRepository = customerRepository;
     }
 
-    @GetMapping(value="/northwind/customer", params={"name", "country"})
+    @GetMapping("/northwind/customers")
+    public List<CustomerEntity> getAllCustomers() {
+        return customerRepository.findAll();
+    }
+
+    @GetMapping(value="/northwind/customers", params={"name"})
     @ResponseBody
-    public List<CustomerEntity> getAllCustomers(@RequestParam(required=false) String name,
-                                                @RequestParam(required=false) String country) {
-        if (name == null && country == null)
-            return customerRepository.findAll();
-        if (name != null && country == null)
-            return customerRepository.findAll()
-                    .stream()
-                    .filter(customerEntity -> customerEntity.getContactName().contains(name))
-                    .collect(Collectors.toList());
-        if (name == null && country != null)
-            return customerRepository.findAll()
-                    .stream()
-                    .filter(customerEntity -> customerEntity.getCountry().contains(country))
-                    .collect(Collectors.toList());
+    public List<CustomerEntity> getCustomersByName(@RequestParam String name) {
         return customerRepository.findAll()
                 .stream()
-                .filter(customerEntity -> customerEntity.getContactName().contains(name)
-                        && customerEntity.getCountry().contains(country))
+                .filter(customerEntity -> customerEntity.getContactName().contains(name))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value="/northwind/customers", params={"country"})
+    @ResponseBody
+    public List<CustomerEntity> getCustomersByCountry(@RequestParam String country) {
+        return customerRepository.findAll()
+                .stream()
+                .filter(customerEntity -> customerEntity.getCountry().contains(country))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value="/northwind/customers", params={"name", "country"})
+    @ResponseBody
+    public List<CustomerEntity> getCustomersByNameAndCountry(@RequestParam String name,
+                                                             @RequestParam String country) {
+        return customerRepository.findAll()
+                .stream()
+                .filter(customerEntity -> customerEntity.getContactName().contains(name))
+                .filter(customerEntity -> customerEntity.getCountry().contains(country))
                 .collect(Collectors.toList());
     }
 
