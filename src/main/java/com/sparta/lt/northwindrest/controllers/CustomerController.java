@@ -18,7 +18,7 @@ public class CustomerController {
         this.customerRepository = customerRepository;
     }
 
-    @GetMapping("/northwind/customer")
+    @GetMapping(value="/northwind/customer", params={"name", "country"})
     @ResponseBody
     public List<CustomerEntity> getAllCustomers(@RequestParam(required=false) String name,
                                                 @RequestParam(required=false) String country) {
