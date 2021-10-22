@@ -22,7 +22,7 @@ public class SupplierController {
     }
 
     @GetMapping("/northwind/suppliers/{supplierId}")
-    public List<SupplierDTO> getSupplierById(@PathVariable Integer supplierId) {
+    public List<SupplierDTO> getSupplierById(@PathVariable int supplierId) {
         return supplierMapService.getSupplierById(supplierId);
     }
 

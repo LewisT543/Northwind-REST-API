@@ -1,5 +1,7 @@
 package com.sparta.lt.northwindrest.entities;
 
+import com.sparta.lt.northwindrest.data.dtos.CustomerDTO;
+
 import javax.persistence.*;
 
 @Table(name = "customers", indexes = {
@@ -14,27 +16,36 @@ public class CustomerEntity {
     @Column(name = "CustomerID", nullable = false, length = 5)
     private String id;
 
+    @Column(name = "CompanyName", nullable = false, length = 40)
     private String companyName;
 
+    @Column(name = "ContactName", length = 30)
     private String contactName;
 
+    @Column(name = "ContactTitle", length = 30)
     private String contactTitle;
 
+    @Column(name = "Address", length = 60)
     private String address;
 
+    @Column(name = "City", length = 15)
     private String city;
 
+    @Column(name = "Region", length = 15)
     private String region;
 
+    @Column(name = "PostalCode", length = 10)
     private String postalCode;
 
+    @Column(name = "Country", length = 15)
     private String country;
 
+    @Column(name = "Phone", length = 24)
     private String phone;
 
+    @Column(name = "Fax", length = 24)
     private String fax;
 
-    @Column(name = "Fax", length = 24)
     public String getFax() {
         return fax;
     }
@@ -43,7 +54,6 @@ public class CustomerEntity {
         this.fax = fax;
     }
 
-    @Column(name = "Phone", length = 24)
     public String getPhone() {
         return phone;
     }
@@ -52,7 +62,6 @@ public class CustomerEntity {
         this.phone = phone;
     }
 
-    @Column(name = "Country", length = 15)
     public String getCountry() {
         return country;
     }
@@ -61,7 +70,6 @@ public class CustomerEntity {
         this.country = country;
     }
 
-    @Column(name = "PostalCode", length = 10)
     public String getPostalCode() {
         return postalCode;
     }
@@ -70,7 +78,6 @@ public class CustomerEntity {
         this.postalCode = postalCode;
     }
 
-    @Column(name = "Region", length = 15)
     public String getRegion() {
         return region;
     }
@@ -79,7 +86,6 @@ public class CustomerEntity {
         this.region = region;
     }
 
-    @Column(name = "City", length = 15)
     public String getCity() {
         return city;
     }
@@ -88,7 +94,6 @@ public class CustomerEntity {
         this.city = city;
     }
 
-    @Column(name = "Address", length = 60)
     public String getAddress() {
         return address;
     }
@@ -97,7 +102,6 @@ public class CustomerEntity {
         this.address = address;
     }
 
-    @Column(name = "ContactTitle", length = 30)
     public String getContactTitle() {
         return contactTitle;
     }
@@ -106,7 +110,6 @@ public class CustomerEntity {
         this.contactTitle = contactTitle;
     }
 
-    @Column(name = "ContactName", length = 30)
     public String getContactName() {
         return contactName;
     }
@@ -115,7 +118,6 @@ public class CustomerEntity {
         this.contactName = contactName;
     }
 
-    @Column(name = "CompanyName", nullable = false, length = 40)
     public String getCompanyName() {
         return companyName;
     }

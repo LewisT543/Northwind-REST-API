@@ -22,7 +22,7 @@ public class SupplierMapService {
                 .collect(Collectors.toList());
     }
 
-    public List<SupplierDTO> getSupplierById(Integer supplierId) {
+    public List<SupplierDTO> getSupplierById(int supplierId) {
         return supplierRepository.findAll()
                 .stream()
                 .filter(supplierEntity -> supplierEntity.getId().equals(supplierId))

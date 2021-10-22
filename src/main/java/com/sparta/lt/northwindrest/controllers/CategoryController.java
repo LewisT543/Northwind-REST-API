@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping("/northwind/categories/{categoryId}")
-    public List<CategoryEntity> getCategoriesById(@PathVariable Integer categoryId) {
+    public List<CategoryEntity> getCategoriesById(@PathVariable int categoryId) {
         return categoryRepository.findAll()
                 .stream()
                 .filter(categoryEntity -> categoryEntity.getId().equals(categoryId))

@@ -8,8 +8,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class EmployeeTerritoryIdEntity implements Serializable {
-    private static final long serialVersionUID = -1454812272280863293L;
+public class EmployeeTerritoryEntityId implements Serializable {
+    private static final long serialVersionUID = -8363957601200085926L;
     @Column(name = "EmployeeID", nullable = false)
     private Integer employeeID;
     @Column(name = "TerritoryID", nullable = false, length = 20)
@@ -40,7 +40,7 @@ public class EmployeeTerritoryIdEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        EmployeeTerritoryIdEntity entity = (EmployeeTerritoryIdEntity) o;
+        EmployeeTerritoryEntityId entity = (EmployeeTerritoryEntityId) o;
         return Objects.equals(this.territoryID, entity.territoryID) &&
                 Objects.equals(this.employeeID, entity.employeeID);
     }

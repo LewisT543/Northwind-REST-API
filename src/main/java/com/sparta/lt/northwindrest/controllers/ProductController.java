@@ -51,12 +51,12 @@ public class ProductController {
     }
 
     @GetMapping(value="/northwind/products", params={"supplierId"})
-    public List<ProductDTO> getProductsBySupplierId(@RequestParam Integer supplierId) {
+    public List<ProductDTO> getProductsBySupplierId(@RequestParam int supplierId) {
         return productMapService.getProductsBySupplierId(supplierId);
     }
 
     @GetMapping(value="/northwind/products", params={"categoryId"})
-    public List<ProductDTO> getProductsByCategoryId(@RequestParam Integer categoryId) {
+    public List<ProductDTO> getProductsByCategoryId(@RequestParam int categoryId) {
         return productMapService.getProductsByCategoryId(categoryId);
     }
 }

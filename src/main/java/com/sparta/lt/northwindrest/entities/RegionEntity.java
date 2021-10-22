@@ -12,9 +12,9 @@ public class RegionEntity {
     @Column(name = "RegionID", nullable = false)
     private Integer id;
 
+    @Column(name = "RegionDescription", nullable = false, length = 50)
     private String regionDescription;
 
-    @Column(name = "RegionDescription", nullable = false, length = 50)
     public String getRegionDescription() {
         return regionDescription;
     }

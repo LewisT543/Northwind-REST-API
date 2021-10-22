@@ -1,7 +1,5 @@
 package com.sparta.lt.northwindrest.entities;
 
-import com.sparta.lt.northwindrest.entities.RegionEntity;
-
 import javax.persistence.*;
 
 @Table(name = "territories")
@@ -11,13 +9,13 @@ public class TerritoryEntity {
     @Column(name = "TerritoryID", nullable = false, length = 20)
     private String id;
 
+    @Column(name = "TerritoryDescription", nullable = false, length = 50)
     private String territoryDescription;
 
-    private RegionEntity regionID;
-
-    @Access(AccessType.PROPERTY)
     @ManyToOne(optional = false)
     @JoinColumn(name = "RegionID", nullable = false)
+    private RegionEntity regionID;
+
     public RegionEntity getRegionID() {
         return regionID;
     }
@@ -26,7 +24,6 @@ public class TerritoryEntity {
         this.regionID = regionID;
     }
 
-    @Column(name = "TerritoryDescription", nullable = false, length = 50)
     public String getTerritoryDescription() {
         return territoryDescription;
     }

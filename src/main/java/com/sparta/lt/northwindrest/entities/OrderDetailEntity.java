@@ -10,15 +10,17 @@ import java.math.BigDecimal;
 @Entity
 public class OrderDetailEntity {
     @EmbeddedId
-    private OrderDetailIdEntity id;
+    private OrderDetailEntityId id;
 
+    @Column(name = "UnitPrice", nullable = false, precision = 10, scale = 4)
     private BigDecimal unitPrice;
 
+    @Column(name = "Quantity", nullable = false)
     private Integer quantity;
 
+    @Column(name = "Discount", nullable = false)
     private Double discount;
 
-    @Column(name = "Discount", nullable = false)
     public Double getDiscount() {
         return discount;
     }
@@ -27,7 +29,6 @@ public class OrderDetailEntity {
         this.discount = discount;
     }
 
-    @Column(name = "Quantity", nullable = false)
     public Integer getQuantity() {
         return quantity;
     }
@@ -36,7 +37,6 @@ public class OrderDetailEntity {
         this.quantity = quantity;
     }
 
-    @Column(name = "UnitPrice", nullable = false, precision = 10, scale = 4)
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
@@ -45,11 +45,11 @@ public class OrderDetailEntity {
         this.unitPrice = unitPrice;
     }
 
-    public OrderDetailIdEntity getId() {
+    public OrderDetailEntityId getId() {
         return id;
     }
 
-    public void setId(OrderDetailIdEntity id) {
+    public void setId(OrderDetailEntityId id) {
         this.id = id;
     }
 }

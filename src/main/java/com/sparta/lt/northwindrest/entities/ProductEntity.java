@@ -1,5 +1,7 @@
 package com.sparta.lt.northwindrest.entities;
 
+import com.sparta.lt.northwindrest.entities.CategoryEntity;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -13,25 +15,35 @@ public class ProductEntity {
     @Column(name = "ProductID", nullable = false)
     private Integer id;
 
+    @Column(name = "ProductName", nullable = false, length = 40)
     private String productName;
 
+    @ManyToOne
+    @JoinColumn(name = "SupplierID")
     private SupplierEntity supplierID;
 
+    @ManyToOne
+    @JoinColumn(name = "CategoryID")
     private CategoryEntity categoryID;
 
+    @Column(name = "QuantityPerUnit", length = 20)
     private String quantityPerUnit;
 
+    @Column(name = "UnitPrice", precision = 10, scale = 4)
     private BigDecimal unitPrice;
 
+    @Column(name = "UnitsInStock")
     private Integer unitsInStock;
 
+    @Column(name = "UnitsOnOrder")
     private Integer unitsOnOrder;
 
+    @Column(name = "ReorderLevel")
     private Integer reorderLevel;
 
+    @Column(name = "Discontinued", nullable = false)
     private Boolean discontinued = false;
 
-    @Column(name = "Discontinued", nullable = false)
     public Boolean getDiscontinued() {
         return discontinued;
     }
@@ -40,7 +52,6 @@ public class ProductEntity {
         this.discontinued = discontinued;
     }
 
-    @Column(name = "ReorderLevel")
     public Integer getReorderLevel() {
         return reorderLevel;
     }
@@ -49,7 +60,6 @@ public class ProductEntity {
         this.reorderLevel = reorderLevel;
     }
 
-    @Column(name = "UnitsOnOrder")
     public Integer getUnitsOnOrder() {
         return unitsOnOrder;
     }
@@ -58,7 +68,6 @@ public class ProductEntity {
         this.unitsOnOrder = unitsOnOrder;
     }
 
-    @Column(name = "UnitsInStock")
     public Integer getUnitsInStock() {
         return unitsInStock;
     }
@@ -67,7 +76,6 @@ public class ProductEntity {
         this.unitsInStock = unitsInStock;
     }
 
-    @Column(name = "UnitPrice", precision = 10, scale = 4)
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
@@ -76,7 +84,6 @@ public class ProductEntity {
         this.unitPrice = unitPrice;
     }
 
-    @Column(name = "QuantityPerUnit", length = 20)
     public String getQuantityPerUnit() {
         return quantityPerUnit;
     }
@@ -85,9 +92,6 @@ public class ProductEntity {
         this.quantityPerUnit = quantityPerUnit;
     }
 
-    @Access(AccessType.PROPERTY)
-    @ManyToOne
-    @JoinColumn(name = "CategoryID")
     public CategoryEntity getCategoryID() {
         return categoryID;
     }
@@ -96,9 +100,6 @@ public class ProductEntity {
         this.categoryID = categoryID;
     }
 
-    @Access(AccessType.PROPERTY)
-    @ManyToOne
-    @JoinColumn(name = "SupplierID")
     public SupplierEntity getSupplierID() {
         return supplierID;
     }
@@ -107,7 +108,6 @@ public class ProductEntity {
         this.supplierID = supplierID;
     }
 
-    @Column(name = "ProductName", nullable = false, length = 40)
     public String getProductName() {
         return productName;
     }

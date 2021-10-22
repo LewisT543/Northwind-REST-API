@@ -16,33 +16,48 @@ public class OrderEntity {
     @Column(name = "OrderID", nullable = false)
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "CustomerID")
     private CustomerEntity customerID;
 
+    @ManyToOne
+    @JoinColumn(name = "EmployeeID")
     private EmployeeEntity employeeID;
 
+    @Column(name = "OrderDate")
     private Instant orderDate;
 
+    @Column(name = "RequiredDate")
     private Instant requiredDate;
 
+    @Column(name = "ShippedDate")
     private Instant shippedDate;
 
+    @ManyToOne
+    @JoinColumn(name = "ShipVia")
     private ShipperEntity shipVia;
 
+    @Column(name = "Freight", precision = 10, scale = 4)
     private BigDecimal freight;
 
+    @Column(name = "ShipName", length = 40)
     private String shipName;
 
+    @Column(name = "ShipAddress", length = 60)
     private String shipAddress;
 
+    @Column(name = "ShipCity", length = 15)
     private String shipCity;
 
+    @Column(name = "ShipRegion", length = 15)
     private String shipRegion;
 
+    @Column(name = "ShipPostalCode", length = 10)
     private String shipPostalCode;
 
+    @Column(name = "ShipCountry", length = 15)
     private String shipCountry;
 
-    @Column(name = "ShipCountry", length = 15)
     public String getShipCountry() {
         return shipCountry;
     }
@@ -51,7 +66,6 @@ public class OrderEntity {
         this.shipCountry = shipCountry;
     }
 
-    @Column(name = "ShipPostalCode", length = 10)
     public String getShipPostalCode() {
         return shipPostalCode;
     }
@@ -60,7 +74,6 @@ public class OrderEntity {
         this.shipPostalCode = shipPostalCode;
     }
 
-    @Column(name = "ShipRegion", length = 15)
     public String getShipRegion() {
         return shipRegion;
     }
@@ -69,7 +82,6 @@ public class OrderEntity {
         this.shipRegion = shipRegion;
     }
 
-    @Column(name = "ShipCity", length = 15)
     public String getShipCity() {
         return shipCity;
     }
@@ -78,7 +90,6 @@ public class OrderEntity {
         this.shipCity = shipCity;
     }
 
-    @Column(name = "ShipAddress", length = 60)
     public String getShipAddress() {
         return shipAddress;
     }
@@ -87,7 +98,6 @@ public class OrderEntity {
         this.shipAddress = shipAddress;
     }
 
-    @Column(name = "ShipName", length = 40)
     public String getShipName() {
         return shipName;
     }
@@ -96,7 +106,6 @@ public class OrderEntity {
         this.shipName = shipName;
     }
 
-    @Column(name = "Freight", precision = 10, scale = 4)
     public BigDecimal getFreight() {
         return freight;
     }
@@ -105,9 +114,6 @@ public class OrderEntity {
         this.freight = freight;
     }
 
-    @Access(AccessType.PROPERTY)
-    @ManyToOne
-    @JoinColumn(name = "ShipVia")
     public ShipperEntity getShipVia() {
         return shipVia;
     }
@@ -116,7 +122,6 @@ public class OrderEntity {
         this.shipVia = shipVia;
     }
 
-    @Column(name = "ShippedDate")
     public Instant getShippedDate() {
         return shippedDate;
     }
@@ -125,7 +130,6 @@ public class OrderEntity {
         this.shippedDate = shippedDate;
     }
 
-    @Column(name = "RequiredDate")
     public Instant getRequiredDate() {
         return requiredDate;
     }
@@ -134,7 +138,6 @@ public class OrderEntity {
         this.requiredDate = requiredDate;
     }
 
-    @Column(name = "OrderDate")
     public Instant getOrderDate() {
         return orderDate;
     }
@@ -143,9 +146,6 @@ public class OrderEntity {
         this.orderDate = orderDate;
     }
 
-    @Access(AccessType.PROPERTY)
-    @ManyToOne
-    @JoinColumn(name = "EmployeeID")
     public EmployeeEntity getEmployeeID() {
         return employeeID;
     }
@@ -154,9 +154,6 @@ public class OrderEntity {
         this.employeeID = employeeID;
     }
 
-    @Access(AccessType.PROPERTY)
-    @ManyToOne
-    @JoinColumn(name = "CustomerID")
     public CustomerEntity getCustomerID() {
         return customerID;
     }

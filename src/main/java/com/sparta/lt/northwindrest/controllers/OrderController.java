@@ -1,7 +1,9 @@
 package com.sparta.lt.northwindrest.controllers;
 
+import com.sparta.lt.northwindrest.data.dtos.EmployeeDTO;
 import com.sparta.lt.northwindrest.data.dtos.OrderDTO;
 import com.sparta.lt.northwindrest.data.mappingservices.OrderMapService;
+import com.sparta.lt.northwindrest.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,16 +37,16 @@ public class OrderController {
 
     // This is broken -> Must allow for inputs of format (dd-MM-YYYY)
     @GetMapping(value="/northwind/orders", params={"shippedDate"})
-    public List<OrderDTO> getOrdersByShippedDate(@RequestParam Instant shipDate) {
-        // Do date processing here
-        return orderMapService.getOrdersByShippedDate(shipDate);
+    public List<OrderDTO> getOrdersByShippedDate(@RequestParam String shipDate) {
+        Instant shipDateInstant = Util.getDateAsInstant(shipDate);
+        return orderMapService.getOrdersByShippedDate(shipDateInstant);
     }
 
     // This is broken -> Must allow for inputs of format (dd-MM-YYYY)
     @GetMapping(value="/northwind/orders", params={"orderDate"})
-    public List<OrderDTO> getOrdersByOrderDate(@RequestParam Instant orderDate) {
-        // Do date processing here
-        return orderMapService.getOrdersByOrderDate(orderDate);
+    public List<OrderDTO> getOrdersByOrderDate(@RequestParam String orderDate) {
+        Instant orderDateInstant = Util.getDateAsInstant(orderDate);
+        return orderMapService.getOrdersByOrderDate(orderDateInstant);
     }
 
     @GetMapping(value="/northwind/orders", params={"employeeId"})

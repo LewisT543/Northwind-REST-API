@@ -65,12 +65,13 @@ public class OrderMapService {
 
     private OrderDTO convertOrderEntityToOrderDTO(OrderEntity order) {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setCustomerId(order.getCustomerID().getCompanyName());
+        orderDTO.setOrderId(order.getId());
+        orderDTO.setCustomerName(order.getCustomerID().getCompanyName());
         orderDTO.setOrderDate(order.getOrderDate());
         orderDTO.setShipDate(order.getShippedDate());
-        orderDTO.setEmployeeId(order.getEmployeeID().getId());
+        orderDTO.setEmployee(order.getEmployeeID().getFirstName() + " " + order.getEmployeeID().getLastName());
         orderDTO.setFreight(order.getFreight());
-        orderDTO.setShipCompanyName(order.getShipName());
+        orderDTO.setShipCompanyName(order.getShipVia().getCompanyName());
         orderDTO.setShipCountry(order.getShipCountry());
         return orderDTO;
     }

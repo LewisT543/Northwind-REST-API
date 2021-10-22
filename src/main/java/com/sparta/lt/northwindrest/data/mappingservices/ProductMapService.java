@@ -81,8 +81,8 @@ public class ProductMapService {
     private ProductDTO convertProductEntityToProductDTO(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductName(product.getProductName());
-        productDTO.setSupplierId(product.getSupplierID().getId());
-        productDTO.setCategoryId(product.getCategoryID().getId());
+        productDTO.setSupplierName(product.getSupplierID().getCompanyName());
+        productDTO.setCategory(product.getCategoryID().getCategoryName());
         productDTO.setUnitPrice(product.getUnitPrice());
         productDTO.setUnitsInStock(product.getUnitsInStock());
         productDTO.setUnitsOnOrder(product.getUnitsOnOrder());

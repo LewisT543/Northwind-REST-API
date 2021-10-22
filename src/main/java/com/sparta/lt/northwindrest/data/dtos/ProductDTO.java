@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class ProductDTO {
     private String productName;
-    private int supplierId;
-    private int categoryId;
+    private String supplierName;
+    private String category;
     private BigDecimal unitPrice;
     private int unitsInStock;
     private int unitsOnOrder;
@@ -20,20 +20,20 @@ public class ProductDTO {
         this.productName = productName;
     }
 
-    public int getSupplierId() {
-        return supplierId;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public BigDecimal getUnitPrice() {

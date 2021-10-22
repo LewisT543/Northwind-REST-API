@@ -8,13 +8,13 @@ import javax.persistence.Table;
 @Entity
 public class EmployeeTerritoryEntity {
     @EmbeddedId
-    private EmployeeTerritoryIdEntity id;
+    private EmployeeTerritoryEntityId id;
 
-    public EmployeeTerritoryIdEntity getId() {
+    public EmployeeTerritoryEntityId getId() {
         return id;
     }
 
-    public void setId(EmployeeTerritoryIdEntity id) {
+    public void setId(EmployeeTerritoryEntityId id) {
         this.id = id;
     }
 }

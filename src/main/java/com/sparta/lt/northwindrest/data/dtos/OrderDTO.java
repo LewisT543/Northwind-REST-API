@@ -1,23 +1,34 @@
 package com.sparta.lt.northwindrest.data.dtos;
 
+import com.sparta.lt.northwindrest.entities.CustomerEntity;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
 public class OrderDTO {
-    private String customerId;
+    private Integer orderId;
+    private String customerName;
     private Instant orderDate;
     private Instant shipDate;
-    private int employeeId;
+    private String employeeName;
     private BigDecimal freight;
     private String shipCompanyName;
     private String shipCountry;
 
-    public String getCustomerId() {
-        return customerId;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Instant getOrderDate() {
@@ -35,12 +46,12 @@ public class OrderDTO {
         this.shipDate = shipDate;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public String getEmployee() {
+        return employeeName;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(String employee) {
+        this.employeeName = employee;
     }
 
     public BigDecimal getFreight() {

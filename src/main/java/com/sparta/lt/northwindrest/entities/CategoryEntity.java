@@ -12,13 +12,16 @@ public class CategoryEntity {
     @Column(name = "CategoryID", nullable = false)
     private Integer id;
 
+    @Column(name = "CategoryName", nullable = false, length = 15)
     private String categoryName;
 
+    @Lob
+    @Column(name = "Description")
     private String description;
 
+    @Column(name = "Picture")
     private byte[] picture;
 
-    @Column(name = "Picture")
     public byte[] getPicture() {
         return picture;
     }
@@ -27,8 +30,6 @@ public class CategoryEntity {
         this.picture = picture;
     }
 
-    @Lob
-    @Column(name = "Description")
     public String getDescription() {
         return description;
     }
@@ -37,7 +38,6 @@ public class CategoryEntity {
         this.description = description;
     }
 
-    @Column(name = "CategoryName", nullable = false, length = 15)
     public String getCategoryName() {
         return categoryName;
     }

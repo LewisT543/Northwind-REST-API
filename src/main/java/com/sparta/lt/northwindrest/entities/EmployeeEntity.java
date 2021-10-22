@@ -1,5 +1,7 @@
 package com.sparta.lt.northwindrest.entities;
 
+import com.sparta.lt.northwindrest.data.dtos.EmployeeDTO;
+
 import javax.persistence.*;
 import java.time.Instant;
 
@@ -14,43 +16,62 @@ public class EmployeeEntity {
     @Column(name = "EmployeeID", nullable = false)
     private Integer id;
 
+    @Column(name = "LastName", nullable = false, length = 20)
     private String lastName;
 
+    @Column(name = "FirstName", nullable = false, length = 10)
     private String firstName;
 
+    @Column(name = "Title", length = 30)
     private String title;
 
+    @Column(name = "TitleOfCourtesy", length = 25)
     private String titleOfCourtesy;
 
+    @Column(name = "BirthDate")
     private Instant birthDate;
 
+    @Column(name = "HireDate")
     private Instant hireDate;
 
+    @Column(name = "Address", length = 60)
     private String address;
 
+    @Column(name = "City", length = 15)
     private String city;
 
+    @Column(name = "Region", length = 15)
     private String region;
 
+    @Column(name = "PostalCode", length = 10)
     private String postalCode;
 
+    @Column(name = "Country", length = 15)
     private String country;
 
+    @Column(name = "HomePhone", length = 24)
     private String homePhone;
 
+    @Column(name = "Extension", length = 4)
     private String extension;
 
+    @Column(name = "Photo")
     private byte[] photo;
 
+    @Lob
+    @Column(name = "Notes", nullable = false)
     private String notes;
 
+    @ManyToOne
+    @JoinColumn(name = "ReportsTo")
     private EmployeeEntity reportsTo;
 
+    @Column(name = "PhotoPath")
     private String photoPath;
 
+    @Column(name = "Salary")
     private Double salary;
 
-    @Column(name = "Salary")
     public Double getSalary() {
         return salary;
     }
@@ -59,7 +80,6 @@ public class EmployeeEntity {
         this.salary = salary;
     }
 
-    @Column(name = "PhotoPath")
     public String getPhotoPath() {
         return photoPath;
     }
@@ -68,9 +88,6 @@ public class EmployeeEntity {
         this.photoPath = photoPath;
     }
 
-    @Access(AccessType.PROPERTY)
-    @ManyToOne
-    @JoinColumn(name = "ReportsTo")
     public EmployeeEntity getReportsTo() {
         return reportsTo;
     }
@@ -79,8 +96,6 @@ public class EmployeeEntity {
         this.reportsTo = reportsTo;
     }
 
-    @Lob
-    @Column(name = "Notes", nullable = false)
     public String getNotes() {
         return notes;
     }
@@ -89,7 +104,6 @@ public class EmployeeEntity {
         this.notes = notes;
     }
 
-    @Column(name = "Photo")
     public byte[] getPhoto() {
         return photo;
     }
@@ -98,7 +112,6 @@ public class EmployeeEntity {
         this.photo = photo;
     }
 
-    @Column(name = "Extension", length = 4)
     public String getExtension() {
         return extension;
     }
@@ -107,7 +120,6 @@ public class EmployeeEntity {
         this.extension = extension;
     }
 
-    @Column(name = "HomePhone", length = 24)
     public String getHomePhone() {
         return homePhone;
     }
@@ -116,7 +128,6 @@ public class EmployeeEntity {
         this.homePhone = homePhone;
     }
 
-    @Column(name = "Country", length = 15)
     public String getCountry() {
         return country;
     }
@@ -125,7 +136,6 @@ public class EmployeeEntity {
         this.country = country;
     }
 
-    @Column(name = "PostalCode", length = 10)
     public String getPostalCode() {
         return postalCode;
     }
@@ -134,7 +144,6 @@ public class EmployeeEntity {
         this.postalCode = postalCode;
     }
 
-    @Column(name = "Region", length = 15)
     public String getRegion() {
         return region;
     }
@@ -143,7 +152,6 @@ public class EmployeeEntity {
         this.region = region;
     }
 
-    @Column(name = "City", length = 15)
     public String getCity() {
         return city;
     }
@@ -152,7 +160,6 @@ public class EmployeeEntity {
         this.city = city;
     }
 
-    @Column(name = "Address", length = 60)
     public String getAddress() {
         return address;
     }
@@ -161,7 +168,6 @@ public class EmployeeEntity {
         this.address = address;
     }
 
-    @Column(name = "HireDate")
     public Instant getHireDate() {
         return hireDate;
     }
@@ -170,7 +176,6 @@ public class EmployeeEntity {
         this.hireDate = hireDate;
     }
 
-    @Column(name = "BirthDate")
     public Instant getBirthDate() {
         return birthDate;
     }
@@ -179,7 +184,6 @@ public class EmployeeEntity {
         this.birthDate = birthDate;
     }
 
-    @Column(name = "TitleOfCourtesy", length = 25)
     public String getTitleOfCourtesy() {
         return titleOfCourtesy;
     }
@@ -188,7 +192,6 @@ public class EmployeeEntity {
         this.titleOfCourtesy = titleOfCourtesy;
     }
 
-    @Column(name = "Title", length = 30)
     public String getTitle() {
         return title;
     }
@@ -197,7 +200,6 @@ public class EmployeeEntity {
         this.title = title;
     }
 
-    @Column(name = "FirstName", nullable = false, length = 10)
     public String getFirstName() {
         return firstName;
     }
@@ -206,7 +208,6 @@ public class EmployeeEntity {
         this.firstName = firstName;
     }
 
-    @Column(name = "LastName", nullable = false, length = 20)
     public String getLastName() {
         return lastName;
     }
