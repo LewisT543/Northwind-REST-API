@@ -15,12 +15,9 @@ import java.util.stream.Collectors;
 
 @RestController
 public class SupplierController {
-
     @Autowired
     private SupplierMapService supplierMapService;
 
-    // TODO: change what happens when params aren't valid
-    // TODO: change how this works because logic is jank
     @GetMapping("/northwind/supplier/{supplierID}")
     public List<SupplierDTO> getSupplierByID(@PathVariable Optional<Integer> supplierID) {
         if (supplierID.isPresent())
@@ -69,55 +66,6 @@ public class SupplierController {
         }
         return suppliers;
     }
-
-    // jesus don't look at this
-    /*@GetMapping("/northwind/suppliers")
-    public List<SupplierEntity> getSuppliers(@RequestParam(required = false) Optional<String> city,
-                                             @RequestParam(required = false) Optional<String> country) {
-
-        List<Optional<String>> optionalParams = Arrays.asList(city, country);
-        List<String> filteredParams = optionalParams.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
-
-        System.out.println("number of valid params: " + filteredParams.size());
-        if(filteredParams.size() == 0) { // if no valid params, return all suppliers
-            return supplierRepository.findAll();
-        } else {
-            System.out.println("doing things");
-            Predicate<SupplierEntity> matches = null;
-            System.out.println("looping");
-            for (int i = 0; i < filteredParams.size(); i++) {
-                Predicate<SupplierEntity> match = null;
-                System.out.println(filteredParams.get(i).toLowerCase());
-                switch (filteredParams.get(i).toLowerCase()) {
-                    case "city":
-                        match = s -> s.getCity().equalsIgnoreCase("london");
-                        break;
-                    case "country":
-                        match = s -> s.getCountry().equalsIgnoreCase("uk");
-                        break;
-                    default: // param not valid, but this should never happen
-                        System.out.println("error in switch statement");
-                        //return supplierRepository.findAll();
-                }
-                if(i == 0) { // make a predicate for the first param
-                    matches = match;
-                } else { // add any remaining params
-                    matches.or(match);
-                }
-            }
-            System.out.println("looping finished");
-            List<SupplierEntity> suppliers = supplierRepository.findAll()
-                    .stream()
-                    .filter(matches)
-                    .collect(Collectors.toList());
-            System.out.println(suppliers.size());
-            suppliers.stream().forEach(s -> System.out.println(s));
-            return suppliers;
-        }
-    }*/
 
     //TODO: change return type to optional maybe? depends if companyName is unique or not
     @GetMapping(value = "/northwind/suppliers", params = {"name"})
