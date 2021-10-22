@@ -5,43 +5,116 @@ import com.sparta.lt.northwindrest.data.mappingservices.CustomerMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
-    private final CustomerMapService customerMapService;
 
     @Autowired
-    CustomerController(CustomerMapService customerMapService) {
-        this.customerMapService = customerMapService;
-    }
+    private CustomerMapService customerMapService;
 
-    @GetMapping("/northwind/customers")
-    public List<CustomerDTO> getAllCustomers() {
-        return customerMapService.getAllCustomerDTO();
-    }
-
-    @GetMapping(value="/northwind/customers", params={"name"})
+    @GetMapping(value="/northwind/customers")
     @ResponseBody
-    public List<CustomerDTO> getCustomersByName(@RequestParam String name) {
-        return customerMapService.getCustomersByName(name);
-    }
+    public List<CustomerDTO> getAllCustomers(@RequestParam String name, @RequestParam(required = false) String title,
+                                             @RequestParam(required = false) String region,
+                                             @RequestParam(required=false) String country) {
 
-    @GetMapping(value="/northwind/customers", params={"country"})
-    @ResponseBody
-    public List<CustomerDTO> getCustomersByCountry(@RequestParam String country) {
-        return customerMapService.getCustomersByCountry(country);
-    }
+        List<CustomerDTO> customers = new ArrayList<>();
 
-    @GetMapping(value="/northwind/customers", params={"name", "country"})
-    @ResponseBody
-    public List<CustomerDTO> getCustomersByNameAndCountry(@RequestParam String name,
-                                                          @RequestParam String country) {
-        return customerMapService.getCustomersByNameAndCountry(name, country);
+        if (title == null && country == null & region == null) {
+            System.err.println("1");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getContactName() != null && c.getContactName().contains(name))
+                    customers.add(c);
+            }
+        } else if (title == null && country == null ) {
+            System.err.println("2");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getRegion() != null && c.getContactName() != null) {
+                    if (c.getContactName().contains(name) && c.getRegion().contains(region)) {
+                        customers.add(c);
+                    }
+                }
+            }
+        } else if (title == null && region == null) {
+            System.err.println("3");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getCountry() != null && c.getContactName() != null) {
+                    if (c.getContactName().contains(name) && c.getCountry().contains(country)) {
+                        customers.add(c);
+                    }
+                }
+            }
+        } else if (title == null) {
+            System.err.println("4");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getContactName() != null && c.getCountry() != null && c.getRegion() != null) {
+                    if (c.getContactName().contains(name) && c.getCountry().contains(country)
+                            && c.getRegion().contains(region)) {
+                        customers.add(c);
+                    }
+                }
+            }
+        } else if (country == null && region == null) {
+            System.err.println("5");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getContactTitle() != null && c.getContactName() != null) {
+                    if (c.getContactName().contains(name) && c.getContactTitle().contains(title)) {
+                        customers.add(c);
+                    }
+                }
+            }
+        } else if (country == null) {
+            System.err.println("6");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getContactName() != null && c.getContactTitle() != null && c.getRegion() != null) {
+                    if (c.getContactName().contains(name) && c.getContactTitle().contains(title)
+                            && c.getRegion().contains(region)) {
+                        customers.add(c);
+                    }
+                }
+            }
+        } else if (region == null) {
+            System.err.println("7");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getContactName() != null && c.getContactTitle() != null && c.getCountry() != null) {
+                    if (c.getContactName().contains(name) && c.getContactTitle().contains(title)
+                            && c.getCountry().contains(country)) {
+                        customers.add(c);
+                    }
+                }
+            }
+        } else if (name != null && title != null && country != null && region != null) {
+            System.err.println("8");
+            for (CustomerDTO c : customerMapService.getAllCustomerDTO()) {
+                if (c.getContactName() != null && c.getContactTitle() != null &&
+                        c.getCountry() != null && c.getRegion() != null) {
+                    if (c.getContactName().contains(name) && c.getContactTitle().contains(title)
+                            && c.getCountry().contains(country) && c.getRegion().contains(region)) {
+                        customers.add(c);
+                    }
+                }
+            }
+        }
+        return customers;
     }
 
     @GetMapping("/northwind/customers/{customerId}")
-    public List<CustomerDTO> getCustomersById(@PathVariable String customerId) {
-        return customerMapService.getCustomersById(customerId);
+    public List<CustomerDTO> getCustomersById(@PathVariable Optional<String> customerId) {
+        if (customerId.isPresent()) {
+            return customerMapService
+                    .getAllCustomerDTO()
+                    .stream()
+                    .filter((c) -> c.getId().equals(customerId.get()))
+                    .collect(Collectors.toList());
+        }else return null;
+    }
+
+    @GetMapping("/northwind/customers/all")
+    public List<CustomerDTO> getCustomers() {
+        return customerMapService.getAllCustomerDTO();
     }
 }

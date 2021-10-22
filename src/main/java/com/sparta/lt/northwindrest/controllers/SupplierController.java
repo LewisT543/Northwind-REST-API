@@ -7,9 +7,9 @@ import com.sparta.lt.northwindrest.repositories.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 // TODO: add encoding/decoding to deal with whitespaces -> %20
 
@@ -79,7 +79,10 @@ public class SupplierController {
         }
 
         return suppliers;
+    }  
+
+    @GetMapping("/northwind/suppliers")
+    public List<SupplierDTO> getAllSuppliers() {
+        return supplierMapService.getAllSupplierDTO();
     }
-
-
 }
