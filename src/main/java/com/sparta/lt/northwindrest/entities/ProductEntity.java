@@ -3,7 +3,9 @@ package com.sparta.lt.northwindrest.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Table(name = "products")
+@Table(name = "products", indexes = {
+        @Index(name = "ProductName", columnList = "ProductName")
+})
 @Entity
 public class ProductEntity {
     @Id
@@ -13,9 +15,9 @@ public class ProductEntity {
 
     private String productName;
 
-    private Integer supplierID;
+    private SupplierEntity supplierID;
 
-    private Integer categoryID;
+    private CategoryEntity categoryID;
 
     private String quantityPerUnit;
 
@@ -27,9 +29,9 @@ public class ProductEntity {
 
     private Integer reorderLevel;
 
-    private Boolean discontinued;
+    private Boolean discontinued = false;
 
-    @Column(name = "Discontinued")
+    @Column(name = "Discontinued", nullable = false)
     public Boolean getDiscontinued() {
         return discontinued;
     }
@@ -65,7 +67,7 @@ public class ProductEntity {
         this.unitsInStock = unitsInStock;
     }
 
-    @Column(name = "UnitPrice", precision = 19, scale = 4)
+    @Column(name = "UnitPrice", precision = 10, scale = 4)
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
@@ -83,21 +85,25 @@ public class ProductEntity {
         this.quantityPerUnit = quantityPerUnit;
     }
 
-    @Column(name = "CategoryID")
-    public Integer getCategoryID() {
+    @Access(AccessType.PROPERTY)
+    @ManyToOne
+    @JoinColumn(name = "CategoryID")
+    public CategoryEntity getCategoryID() {
         return categoryID;
     }
 
-    public void setCategoryID(Integer categoryID) {
+    public void setCategoryID(CategoryEntity categoryID) {
         this.categoryID = categoryID;
     }
 
-    @Column(name = "SupplierID")
-    public Integer getSupplierID() {
+    @Access(AccessType.PROPERTY)
+    @ManyToOne
+    @JoinColumn(name = "SupplierID")
+    public SupplierEntity getSupplierID() {
         return supplierID;
     }
 
-    public void setSupplierID(Integer supplierID) {
+    public void setSupplierID(SupplierEntity supplierID) {
         this.supplierID = supplierID;
     }
 

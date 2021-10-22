@@ -65,7 +65,7 @@ public class ProductMapService {
     public List<ProductDTO> getProductsBySupplierId(Integer supplierId) {
         return productRepository.findAll()
                 .stream()
-                .filter(productEntity -> productEntity.getSupplierID().equals(supplierId))
+                .filter(productEntity -> productEntity.getSupplierID().getId().equals(supplierId))
                 .map(this::convertProductEntityToProductDTO)
                 .collect(Collectors.toList());
     }
@@ -73,7 +73,7 @@ public class ProductMapService {
     public List<ProductDTO> getProductsByCategoryId(Integer categoryId) {
         return productRepository.findAll()
                 .stream()
-                .filter(productEntity -> productEntity.getCategoryID().equals(categoryId))
+                .filter(productEntity -> productEntity.getCategoryID().getId().equals(categoryId))
                 .map(this::convertProductEntityToProductDTO)
                 .collect(Collectors.toList());
     }
@@ -81,8 +81,8 @@ public class ProductMapService {
     private ProductDTO convertProductEntityToProductDTO(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductName(product.getProductName());
-        productDTO.setSupplierId(product.getSupplierID());
-        productDTO.setCategoryId(product.getCategoryID());
+        productDTO.setSupplierId(product.getSupplierID().getId());
+        productDTO.setCategoryId(product.getCategoryID().getId());
         productDTO.setUnitPrice(product.getUnitPrice());
         productDTO.setUnitsInStock(product.getUnitsInStock());
         productDTO.setUnitsOnOrder(product.getUnitsOnOrder());

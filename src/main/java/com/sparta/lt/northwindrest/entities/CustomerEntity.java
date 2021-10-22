@@ -1,11 +1,13 @@
 package com.sparta.lt.northwindrest.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = "customers")
+@Table(name = "customers", indexes = {
+        @Index(name = "CompanyName", columnList = "CompanyName"),
+        @Index(name = "PostalCode", columnList = "PostalCode"),
+        @Index(name = "Region", columnList = "Region"),
+        @Index(name = "City", columnList = "City")
+})
 @Entity
 public class CustomerEntity {
     @Id
@@ -31,28 +33,6 @@ public class CustomerEntity {
     private String phone;
 
     private String fax;
-
-    private byte[] image;
-
-    private byte[] imageThumbnail;
-
-    @Column(name = "ImageThumbnail")
-    public byte[] getImageThumbnail() {
-        return imageThumbnail;
-    }
-
-    public void setImageThumbnail(byte[] imageThumbnail) {
-        this.imageThumbnail = imageThumbnail;
-    }
-
-    @Column(name = "Image")
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 
     @Column(name = "Fax", length = 24)
     public String getFax() {

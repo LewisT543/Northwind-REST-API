@@ -26,7 +26,7 @@ public class OrderMapService {
     public List<OrderDTO> getOrdersByCustomer(String customerId) {
         return orderRepository.findAll()
                 .stream()
-                .filter(orderEntity -> orderEntity.getCustomerID().equals(customerId))
+                .filter(orderEntity -> orderEntity.getCustomerID().getId().equals(customerId))
                 .map(this::convertOrderEntityToOrderDTO)
                 .collect(Collectors.toList());
     }
@@ -58,17 +58,17 @@ public class OrderMapService {
     public List<OrderDTO> getOrdersByEmployeeId(Integer employeeId) {
         return orderRepository.findAll()
                 .stream()
-                .filter(orderEntity -> orderEntity.getEmployeeID().equals(employeeId))
+                .filter(orderEntity -> orderEntity.getEmployeeID().getId().equals(employeeId))
                 .map(this::convertOrderEntityToOrderDTO)
                 .collect(Collectors.toList());
     }
 
     private OrderDTO convertOrderEntityToOrderDTO(OrderEntity order) {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setCustomerId(order.getCustomerID());
+        orderDTO.setCustomerId(order.getCustomerID().getCompanyName());
         orderDTO.setOrderDate(order.getOrderDate());
         orderDTO.setShipDate(order.getShippedDate());
-        orderDTO.setEmployeeId(order.getEmployeeID());
+        orderDTO.setEmployeeId(order.getEmployeeID().getId());
         orderDTO.setFreight(order.getFreight());
         orderDTO.setShipCompanyName(order.getShipName());
         orderDTO.setShipCountry(order.getShipCountry());

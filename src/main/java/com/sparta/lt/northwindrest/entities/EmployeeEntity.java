@@ -44,19 +44,43 @@ public class EmployeeEntity {
 
     private String notes;
 
-    private Integer reportsTo;
+    private EmployeeEntity reportsTo;
 
-    @Column(name = "ReportsTo")
-    public Integer getReportsTo() {
+    private String photoPath;
+
+    private Double salary;
+
+    @Column(name = "Salary")
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
+
+    @Column(name = "PhotoPath")
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    @Access(AccessType.PROPERTY)
+    @ManyToOne
+    @JoinColumn(name = "ReportsTo")
+    public EmployeeEntity getReportsTo() {
         return reportsTo;
     }
 
-    public void setReportsTo(Integer reportsTo) {
+    public void setReportsTo(EmployeeEntity reportsTo) {
         this.reportsTo = reportsTo;
     }
 
     @Lob
-    @Column(name = "Notes")
+    @Column(name = "Notes", nullable = false)
     public String getNotes() {
         return notes;
     }
