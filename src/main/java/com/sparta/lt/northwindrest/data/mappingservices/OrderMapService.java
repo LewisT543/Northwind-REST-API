@@ -64,14 +64,6 @@ public class OrderMapService {
     }
 
     private OrderDTO convertOrderEntityToOrderDTO(OrderEntity order) {
-        OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setCustomerId(order.getCustomerID());
-        orderDTO.setOrderDate(order.getOrderDate());
-        orderDTO.setShipDate(order.getShippedDate());
-        orderDTO.setEmployeeId(order.getEmployeeID());
-        orderDTO.setFreight(order.getFreight());
-        orderDTO.setShipCompanyName(order.getShipName());
-        orderDTO.setShipCountry(order.getShipCountry());
-        return orderDTO;
+        return new OrderDTO(order);
     }
 }

@@ -1,4 +1,4 @@
-package com.sparta.lt.northwindrest.dto;
+package com.sparta.lt.northwindrest.data.dtos;
 
 import com.sparta.lt.northwindrest.entities.ShipperEntity;
 import org.springframework.stereotype.Service;

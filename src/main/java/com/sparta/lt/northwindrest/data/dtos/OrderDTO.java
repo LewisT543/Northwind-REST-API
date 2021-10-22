@@ -1,5 +1,8 @@
 package com.sparta.lt.northwindrest.data.dtos;
 
+import com.sparta.lt.northwindrest.entities.OrderEntity;
+import com.sparta.lt.northwindrest.util.Util;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -7,10 +10,38 @@ public class OrderDTO {
     private String customerId;
     private Instant orderDate;
     private Instant shipDate;
-    private int employeeId;
+    private int employeeId, orderID;
     private BigDecimal freight;
     private String shipCompanyName;
-    private String shipCountry;
+    private String shipCountry, shipRegion;
+
+    public OrderDTO (OrderEntity orderEntity) {
+        customerId = orderEntity.getCustomerID();
+        orderDate = orderEntity.getOrderDate();
+        shipDate = orderEntity.getShippedDate();
+        employeeId = orderEntity.getEmployeeID();
+        orderID = orderEntity.getId();
+        freight = orderEntity.getFreight();
+        shipRegion = orderEntity.getShipRegion();
+        shipCompanyName = orderEntity.getShipName();
+        shipCompanyName = orderEntity.getShipCountry();
+    }
+
+    public String getShipRegion() {
+        return shipRegion;
+    }
+
+    public void setShipRegion(String shipRegion) {
+        this.shipRegion = shipRegion;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
 
     public String getCustomerId() {
         return customerId;

@@ -1,18 +1,15 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.dto.ShipperDTO;
-import com.sparta.lt.northwindrest.entities.ShipperEntity;
-import com.sparta.lt.northwindrest.mappers.ShipperMapService;
-import com.sparta.lt.northwindrest.repositories.ShipperRepository;
+import com.sparta.lt.northwindrest.data.dtos.ShipperDTO;
+import com.sparta.lt.northwindrest.data.mappingservices.ShipperMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 public class ShipperController {

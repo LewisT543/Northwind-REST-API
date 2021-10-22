@@ -56,12 +56,6 @@ public class CustomerMapService {
     }
 
     private CustomerDTO convertCustomerEntityToCustomerDTO(CustomerEntity customer) {
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setContactName(customer.getContactName());
-        customerDTO.setCompanyName(customer.getCompanyName());
-        customerDTO.setContactTitle(customer.getContactTitle());
-        customerDTO.setCity(customer.getCity());
-        customerDTO.setCountry(customer.getCountry());
-        return customerDTO;
+        return new CustomerDTO(customer);
     }
 }
