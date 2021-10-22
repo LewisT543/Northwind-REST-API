@@ -1,12 +1,11 @@
-package com.sparta.lt.northwindrest.mappers;
+package com.sparta.lt.northwindrest.data.mappingservices;
 
-import com.sparta.lt.northwindrest.dto.ShipperDTO;
+import com.sparta.lt.northwindrest.data.dtos.ShipperDTO;
 import com.sparta.lt.northwindrest.entities.ShipperEntity;
 import com.sparta.lt.northwindrest.repositories.ShipperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.SecondaryTable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +22,8 @@ public class ShipperMapService {
                 .map(this::convertToShipperDTO)
                 .collect(Collectors.toList());
     }
+
+
 
     private ShipperDTO convertToShipperDTO(ShipperEntity shipperEntity) {
         return new ShipperDTO(shipperEntity);

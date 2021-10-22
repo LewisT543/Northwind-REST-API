@@ -79,12 +79,6 @@ public class SupplierMapService {
     }
 
     private SupplierDTO convertSupplierEntityToSupplierDTO(SupplierEntity supplier) {
-        SupplierDTO supplierDTO = new SupplierDTO();
-        supplierDTO.setSupplierName(supplier.getCompanyName());
-        supplierDTO.setContactName(supplier.getContactName());
-        supplierDTO.setContactTitle(supplier.getContactTitle());
-        supplierDTO.setCountry(supplier.getCountry());
-        supplierDTO.setCity(supplier.getCity());
-        return supplierDTO;
+        return new SupplierDTO(supplier);
     }
 }
