@@ -1,16 +1,8 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.dto.CustomerDTO;
-import com.sparta.lt.northwindrest.entities.CustomerEntity;
-import com.sparta.lt.northwindrest.mappers.CustomerMapService;
-import com.sparta.lt.northwindrest.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
@@ -118,5 +110,4 @@ public class CustomerController {
     @GetMapping("/northwind/customers/all")
     public List<CustomerDTO> getCustomers() {
         return customerMapService.getAllCustomers();
-    }
 }

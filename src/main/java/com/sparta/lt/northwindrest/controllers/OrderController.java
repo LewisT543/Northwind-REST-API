@@ -1,41 +1,39 @@
 package com.sparta.lt.northwindrest.controllers;
 
-
-import com.sparta.lt.northwindrest.entities.OrderEntity;
-import com.sparta.lt.northwindrest.repositories.OrderRepository;
-import com.sparta.lt.northwindrest.util.Util;
+import com.sparta.lt.northwindrest.data.dtos.OrderDTO;
+import com.sparta.lt.northwindrest.data.mappingservices.OrderMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Stack;
-import java.util.stream.Collectors;
 
 @RestController
 public class OrderController {
-    private final OrderRepository orderRepository;
-    private static final String DB_NAME = "/northwind";
-
+    private final OrderMapService orderMapService;
     @Autowired
-    public OrderController(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrderController(OrderMapService orderMapService) {
+        this.orderMapService = orderMapService;
     }
 
-    @GetMapping(DB_NAME+"/orders")
-    public List<OrderEntity> getOrders() {
-        return orderRepository.findAll();
+    @GetMapping("/northwind/orders")
+    public List<OrderDTO> getAllOrders() {
+        return orderMapService.getAllOrderDTO();
     }
 
-    @GetMapping(DB_NAME+"/orders/{orderID}")
+    @GetMapping(value="/northwind/orders", params={"customerId"})
+    public List<OrderDTO> getOrdersByCustomer(@RequestParam String customerId) {
+        return orderMapService.getOrdersByCustomer(customerId);
+    }
+
+    @GetMapping("/northwind/orders/{orderID}")
     public Optional<OrderEntity> getOrderByID(Integer orderID) {
         return orderRepository.findById(orderID);
     }
 
-    @GetMapping(DB_NAME+"/orders/customer/{customerID}")
+    @GetMapping("/northwind/orders/customer/{customerID}")
     public List<OrderEntity> getOrdersCustomerID(String customerID) {
         return orderRepository.findAll()
                 .stream()
@@ -44,7 +42,7 @@ public class OrderController {
     }
 
     //TODO: Null handling
-    @GetMapping(DB_NAME+"/orders/location")
+    @GetMapping("/northwind/orders/location")
     public List<OrderEntity> getOrdersByCountryAndRegion(String country, String region) {
         if (country != null && region != null) {
             List<OrderEntity> results = new ArrayList<>();
@@ -64,7 +62,7 @@ public class OrderController {
         } else return null;
     }
 
-    @GetMapping(DB_NAME+"/orders/date")
+    @GetMapping("/northwind/orders/date")
     public List<OrderEntity> getOrdersByDate(String orderDate, String shippedDate) {
         if (orderDate != null && shippedDate != null) {
             List<OrderEntity> results = new ArrayList<>();
@@ -83,5 +81,9 @@ public class OrderController {
                     .filter((o) -> o.getOrderDate().equals(Util.getDateAsInstant(orderDate)))
                     .collect(Collectors.toList());
         } else return null;
+      
+    @GetMapping(value="/northwind/orders", params={"employeeId"})
+    public List<OrderDTO> getOrdersByEmployeeId(@RequestParam Integer employeeId) {
+        return orderMapService.getOrdersByEmployeeId(employeeId);
     }
 }

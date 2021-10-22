@@ -1,7 +1,7 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.entities.EmployeeEntity;
-import com.sparta.lt.northwindrest.repositories.EmployeeRepository;
+import com.sparta.lt.northwindrest.data.dtos.EmployeeDTO;
+import com.sparta.lt.northwindrest.data.mappingservices.EmployeeMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,94 +9,61 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class EmployeeController {
-    private EmployeeRepository employeeRepository;
+    private final EmployeeMapService employeeMapService;
 
     @Autowired
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeMapService employeeMapService) {
+        this.employeeMapService = employeeMapService;
     }
 
     @GetMapping("/northwind/employees")
-    public List<EmployeeEntity> getAllEmployees() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeMapService.getAllEmployeeDTO();
+    }
+
+    @GetMapping(value="/northwind/employees", params={"employeeId"})
+    public List<EmployeeDTO> getEmployeesByEmployeeId(@RequestParam Integer employeeId) {
+        return employeeMapService.getEmployeesById(employeeId);
     }
 
     @GetMapping(value="/northwind/employees", params={"firstName"})
-    @ResponseBody
-    public List<EmployeeEntity> getEmployeesByFirstName(@RequestParam String firstName) {
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employeeEntity -> employeeEntity.getFirstName().contains(firstName))
-                .collect(Collectors.toList());
+    public List<EmployeeDTO> getEmployeesByFirstName(@RequestParam String firstName) {
+        return employeeMapService.getEmployeesByFirstName(firstName);
     }
 
     @GetMapping(value="/northwind/employees", params={"lastName"})
     @ResponseBody
-    public List<EmployeeEntity> getEmployeesByLastName(@RequestParam String lastName) {
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employeeEntity -> employeeEntity.getLastName().contains(lastName))
-                .collect(Collectors.toList());
+    public List<EmployeeDTO> getEmployeesByLastName(@RequestParam String lastName) {
+        return employeeMapService.getEmployeesByLastName(lastName);
     }
 
     @GetMapping(value="/northwind/employees", params={"country"})
     @ResponseBody
-    public List<EmployeeEntity> getEmployeesByCountry(@RequestParam String country) {
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employeeEntity -> employeeEntity.getCountry().contains(country))
-                .collect(Collectors.toList());
+    public List<EmployeeDTO> getEmployeesByCountry(@RequestParam String country) {
+        return employeeMapService.getEmployeesByCountry(country);
     }
 
     @GetMapping(value="/northwind/employees", params={"firstName", "country"})
     @ResponseBody
-    public List<EmployeeEntity> getEmployeesByFirstNameAndCountry(@RequestParam String firstName,
-                                                                  @RequestParam(required=false) String country) {
-        if (country == null)
-            return employeeRepository.findAll()
-                    .stream()
-                    .filter(employeeEntity -> employeeEntity.getFirstName().contains(firstName))
-                    .collect(Collectors.toList());
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employeeEntity -> employeeEntity.getFirstName().contains(firstName)
-                        && employeeEntity.getCountry().contains(country))
-                .collect(Collectors.toList());
+    public List<EmployeeDTO> getEmployeesByFirstNameAndCountry(@RequestParam String firstName,
+                                                                  @RequestParam String country) {
+        return employeeMapService.getEmployeesByFirstNameAndCountry(firstName, country);
     }
 
     @GetMapping(value="/northwind/employees", params={"lastName", "country"})
     @ResponseBody
-    public List<EmployeeEntity> getEmployeesByLastNameAndCountry(@RequestParam String lastName,
-                                                                 @RequestParam(required=false) String country) {
-        if (country == null)
-            return employeeRepository.findAll()
-                    .stream()
-                    .filter(employeeEntity -> employeeEntity.getLastName().contains(lastName))
-                    .collect(Collectors.toList());
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employeeEntity -> employeeEntity.getLastName().contains(lastName)
-                        && employeeEntity.getCountry().contains(country))
-                .collect(Collectors.toList());
+    public List<EmployeeDTO> getEmployeesByLastNameAndCountry(@RequestParam String lastName,
+                                                                 @RequestParam String country) {
+        return employeeMapService.getEmployeesByLastNameAndCountry(lastName, country);
     }
 
     @GetMapping(value="/northwind/employees", params={"firstName", "lastName"})
     @ResponseBody
-    public List<EmployeeEntity> getEmployeesByFirstAndLastName(@RequestParam(required=false) String firstName,
+    public List<EmployeeDTO> getEmployeesByFirstAndLastName(@RequestParam String firstName,
                                                                @RequestParam String lastName) {
-        if (firstName == null)
-            return employeeRepository.findAll()
-                    .stream()
-                    .filter(employeeEntity -> employeeEntity.getLastName().contains(lastName))
-                    .collect(Collectors.toList());
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employeeEntity -> employeeEntity.getFirstName().contains(firstName)
-                        && employeeEntity.getLastName().contains(lastName))
-                .collect(Collectors.toList());
+        return employeeMapService.getEmployeesByFirstAndLastName(firstName, lastName);
     }
 }
