@@ -2,15 +2,13 @@ package com.sparta.lt.northwindrest.controllers;
 
 import com.sparta.lt.northwindrest.data.dtos.SupplierDTO;
 import com.sparta.lt.northwindrest.data.mappingservices.SupplierMapService;
-import com.sparta.lt.northwindrest.entities.SupplierEntity;
-import com.sparta.lt.northwindrest.repositories.SupplierRepository;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 public class SupplierController {
