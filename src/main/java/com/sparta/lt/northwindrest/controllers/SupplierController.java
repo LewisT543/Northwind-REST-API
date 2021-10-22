@@ -1,62 +1,85 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.data.dtos.SupplierDTO;
-import com.sparta.lt.northwindrest.data.mappingservices.SupplierMapService;
+import com.sparta.lt.northwindrest.dto.SupplierDTO;
+import com.sparta.lt.northwindrest.entities.SupplierEntity;
+import com.sparta.lt.northwindrest.mappers.SupplierMapService;
+import com.sparta.lt.northwindrest.repositories.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+// TODO: add encoding/decoding to deal with whitespaces -> %20
 
 @RestController
 public class SupplierController {
-    private final SupplierMapService supplierMapService;
-
     @Autowired
-    public SupplierController(SupplierMapService supplierMapService) {
-        this.supplierMapService = supplierMapService;
+    private SupplierMapService supplierMapService;
+
+    @GetMapping("/northwind/supplier/{supplierID}")
+    public List<SupplierDTO> getSupplierByID(@PathVariable Optional<Integer> supplierID) {
+        if (supplierID.isPresent())
+            return supplierMapService.getAllSuppliers();
+        else return null;
     }
 
-    @GetMapping("/northwind/suppliers")
-    public List<SupplierDTO> getAllSuppliers() {
-        return supplierMapService.getAllSupplierDTO();
+    @GetMapping("northwind/supplier")
+    public List<SupplierDTO> sortSuppliersByRegionCountryCity(
+            @RequestParam String country, @RequestParam(required = false) String city,
+            @RequestParam(required = false) String postCode) {
+
+        List<SupplierDTO> suppliers = new ArrayList();
+
+        if (city == null && postCode == null) {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getCountry() != null && s.getCountry().equals(country)) {
+                    suppliers.add(s);
+                }
+            }
+        } else if (city != null && postCode == null) {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getCity() != null && s.getCountry() != null) {
+                    if (s.getCountry().equals(country) && s.getCity().equals(city)) {
+                        suppliers.add(s);
+                    }
+                }
+            }
+        } else if (city == null) {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getPostalCode() != null && s.getCountry() != null) {
+                    if (s.getCountry().equals(country) && s.getPostalCode().equals(postCode)) {
+                        suppliers.add(s);
+                    }
+                }
+            }
+        } else {
+            for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+                if (s.getPostalCode() != null && s.getCity() != null && s.getPostalCode() != null) {
+                    if (s.getCountry().equals(country) && s.getCity().equals(city)
+                            && s.getPostalCode().equals(postCode)) {
+                        suppliers.add(s);
+                    }
+                }
+            }
+        }
+        return suppliers;
     }
 
-    @GetMapping("/northwind/suppliers/{supplierId}")
-    public List<SupplierDTO> getSupplierById(@PathVariable Integer supplierId) {
-        return supplierMapService.getSupplierById(supplierId);
+    //TODO: change return type to optional maybe? depends if companyName is unique or not
+    @GetMapping(value = "/northwind/suppliers", params = {"name"})
+    public List<SupplierDTO> getSuppliersWithCompanyName(@RequestParam String name) {
+        List<SupplierDTO> suppliers = new ArrayList<>();
+
+        for (SupplierDTO s : supplierMapService.getAllSuppliers()) {
+            if (s.getCompanyName() != null && s.getCompanyName().equals(name)) {
+                suppliers.add(s);
+            }
+        }
+
+        return suppliers;
     }
 
-    @GetMapping(value="/northwind/suppliers", params={"country"})
-    public List<SupplierDTO> getSuppliersByCountry(@RequestParam String country) {
-        return supplierMapService.getSuppliersByCountry(country);
-    }
 
-    @GetMapping(value="/northwind/suppliers", params={"city"})
-    public List<SupplierDTO> getSuppliersByCity(@RequestParam String city) {
-        return supplierMapService.getSuppliersByCity(city);
-    }
-
-    @GetMapping(value="/northwind/suppliers", params={"postcode"})
-    public List<SupplierDTO> getSuppliersByPostcode(@RequestParam String postcode) {
-        return supplierMapService.getSuppliersByPostcode(postcode);
-    }
-
-    @GetMapping(value="/northwind/suppliers", params = {"title"})
-    public List<SupplierDTO> getSuppliersByTitle(@RequestParam String title) {
-        return supplierMapService.getSuppliersByTitle(title);
-    }
-
-    @GetMapping(value="/northwind/suppliers", params={"companyName"})
-    public List<SupplierDTO> getSuppliersByCompanyName(@RequestParam String companyName) {
-        return supplierMapService.getSuppliersByCompanyName(companyName);
-    }
-
-    @GetMapping(value="/northwind/suppliers", params={"country", "city"})
-    public List<SupplierDTO> getSuppliersByCountryAndCity(@RequestParam String country,
-                                                             @RequestParam String city) {
-        return supplierMapService.getSuppliersByCountryAndCity(country, city);
-    }
 }
