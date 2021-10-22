@@ -1,5 +1,7 @@
 package com.sparta.lt.northwindrest.controllers;
 
+import com.sparta.lt.northwindrest.data.dtos.SupplierDTO;
+import com.sparta.lt.northwindrest.data.mappingservices.SupplierMapService;
 import com.sparta.lt.northwindrest.entities.SupplierEntity;
 import com.sparta.lt.northwindrest.repositories.SupplierRepository;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
@@ -10,73 +12,53 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-// TODO: add encoding/decoding to deal with whitespaces -> %20
-
 @RestController
 public class SupplierController {
-    private final SupplierRepository supplierRepository;
+    private final SupplierMapService supplierMapService;
 
     @Autowired
-    public SupplierController(SupplierRepository supplierRepository) {
-        this.supplierRepository = supplierRepository;
+    public SupplierController(SupplierMapService supplierMapService) {
+        this.supplierMapService = supplierMapService;
     }
 
     @GetMapping("/northwind/suppliers")
-    public List<SupplierEntity> getAllSuppliers() {
-        return supplierRepository.findAll();
+    public List<SupplierDTO> getAllSuppliers() {
+        return supplierMapService.getAllSupplierDTO();
     }
 
     @GetMapping("/northwind/suppliers/{supplierId}")
-    public Optional<SupplierEntity> getSupplierById(@PathVariable Integer supplierId) {
-        return supplierRepository.findById(supplierId);
+    public List<SupplierDTO> getSupplierById(@PathVariable Integer supplierId) {
+        return supplierMapService.getSupplierById(supplierId);
     }
 
     @GetMapping(value="/northwind/suppliers", params={"country"})
-    public List<SupplierEntity> getSuppliersByCountry(@RequestParam String country) {
-        return supplierRepository.findAll()
-                .stream()
-                .filter(supplierEntity -> supplierEntity.getCountry().contains(country))
-                .collect(Collectors.toList());
+    public List<SupplierDTO> getSuppliersByCountry(@RequestParam String country) {
+        return supplierMapService.getSuppliersByCountry(country);
     }
 
     @GetMapping(value="/northwind/suppliers", params={"city"})
-    public List<SupplierEntity> getSuppliersByCity(@RequestParam String city) {
-        return supplierRepository.findAll()
-                .stream()
-                .filter(supplierEntity -> supplierEntity.getCity().contains(city))
-                .collect(Collectors.toList());
+    public List<SupplierDTO> getSuppliersByCity(@RequestParam String city) {
+        return supplierMapService.getSuppliersByCity(city);
     }
 
     @GetMapping(value="/northwind/suppliers", params={"postcode"})
-    public List<SupplierEntity> getSuppliersByPostcode(@RequestParam String postcode) {
-        return supplierRepository.findAll()
-                .stream()
-                .filter(supplierEntity -> supplierEntity.getPostalCode().contains(postcode))
-                .collect(Collectors.toList());
+    public List<SupplierDTO> getSuppliersByPostcode(@RequestParam String postcode) {
+        return supplierMapService.getSuppliersByPostcode(postcode);
     }
 
     @GetMapping(value="/northwind/suppliers", params = {"title"})
-    public List<SupplierEntity> getSuppliersByTitle(@RequestParam String title) {
-        return supplierRepository.findAll()
-                .stream()
-                .filter(supplierEntity -> supplierEntity.getContactTitle().equalsIgnoreCase(title))
-                .collect(Collectors.toList());
+    public List<SupplierDTO> getSuppliersByTitle(@RequestParam String title) {
+        return supplierMapService.getSuppliersByTitle(title);
     }
 
     @GetMapping(value="/northwind/suppliers", params={"companyName"})
-    public List<SupplierEntity> getSuppliersByCompanyName(@RequestParam String companyName) {
-        return supplierRepository.findAll()
-                .stream()
-                .filter(supplierEntity -> supplierEntity.getCompanyName().contains(companyName))
-                .collect(Collectors.toList());
+    public List<SupplierDTO> getSuppliersByCompanyName(@RequestParam String companyName) {
+        return supplierMapService.getSuppliersByCompanyName(companyName);
     }
 
     @GetMapping(value="/northwind/suppliers", params={"country", "city"})
-    public List<SupplierEntity> getSuppliersByCountryAndCity(@RequestParam String country,
+    public List<SupplierDTO> getSuppliersByCountryAndCity(@RequestParam String country,
                                                              @RequestParam String city) {
-        return supplierRepository.findAll().stream()
-                .filter(supplierEntity -> supplierEntity.getCountry().contains(country))
-                .filter(supplierEntity -> supplierEntity.getCity().contains(city))
-                .collect(Collectors.toList());
+        return supplierMapService.getSuppliersByCountryAndCity(country, city);
     }
 }
