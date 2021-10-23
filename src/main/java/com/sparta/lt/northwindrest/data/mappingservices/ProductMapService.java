@@ -4,7 +4,10 @@ import com.sparta.lt.northwindrest.data.dtos.ProductDTO;
 import com.sparta.lt.northwindrest.entities.ProductEntity;
 import com.sparta.lt.northwindrest.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,66 +19,98 @@ public class ProductMapService {
     private ProductRepository productRepository;
 
     public List<ProductDTO> getAllProductDTO() {
-        return productRepository.findAll()
-                .stream()
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "resource not found", e);
+        }
     }
 
     public List<ProductDTO> getProductById(Integer productId) {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getId().equals(productId))
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .filter(productEntity -> productEntity.getId().equals(productId))
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product ID not found", e);
+        }
     }
 
     public List<ProductDTO> getProductByName(String productName) {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getProductName().contains(productName))
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .filter(productEntity -> productEntity.getProductName().contains(productName))
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product name not found", e);
+        }
     }
 
     public List<ProductDTO> getProductsInStock() {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getUnitsInStock() > 0)
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .filter(productEntity -> productEntity.getUnitsInStock() > 0)
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
+        }
     }
 
     public List<ProductDTO> getProductsOutOfStock() {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getUnitsInStock() == 0)
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .filter(productEntity -> productEntity.getUnitsInStock() == 0)
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
+        }
     }
 
     public List<ProductDTO> getProductsDiscontinued() {
-        return productRepository.findAll()
-                .stream()
-                .filter(ProductEntity::getDiscontinued)
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .filter(ProductEntity::getDiscontinued)
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
+        }
     }
 
     public List<ProductDTO> getProductsBySupplierId(Integer supplierId) {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getSupplierID().getId().equals(supplierId))
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .filter(productEntity -> productEntity.getSupplierID().getId().equals(supplierId))
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "supplier id not found", e);
+        }
     }
 
     public List<ProductDTO> getProductsByCategoryId(Integer categoryId) {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getCategoryID().getId().equals(categoryId))
-                .map(this::convertProductEntityToProductDTO)
-                .collect(Collectors.toList());
+        try {
+            return productRepository.findAll()
+                    .stream()
+                    .filter(productEntity -> productEntity.getCategoryID().getId().equals(categoryId))
+                    .map(this::convertProductEntityToProductDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category id not found", e);
+        }
     }
 
     private ProductDTO convertProductEntityToProductDTO(ProductEntity product) {

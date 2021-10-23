@@ -4,7 +4,10 @@ import com.sparta.lt.northwindrest.data.dtos.OrderDTO;
 import com.sparta.lt.northwindrest.entities.OrderEntity;
 import com.sparta.lt.northwindrest.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -17,50 +20,74 @@ public class OrderMapService {
     private OrderRepository orderRepository;
 
     public List<OrderDTO> getAllOrderDTO() {
-        return orderRepository.findAll()
-                .stream()
-                .map(this::convertOrderEntityToOrderDTO)
-                .collect(Collectors.toList());
+        try {
+            return orderRepository.findAll()
+                    .stream()
+                    .map(this::convertOrderEntityToOrderDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
+        }
     }
 
     public List<OrderDTO> getOrdersByCustomer(String customerId) {
-        return orderRepository.findAll()
-                .stream()
-                .filter(orderEntity -> orderEntity.getCustomerID().getId().equals(customerId))
-                .map(this::convertOrderEntityToOrderDTO)
-                .collect(Collectors.toList());
+        try {
+            return orderRepository.findAll()
+                    .stream()
+                    .filter(orderEntity -> orderEntity.getCustomerID().getId().equals(customerId))
+                    .map(this::convertOrderEntityToOrderDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "customer id not found", e);
+        }
     }
 
     public List<OrderDTO> getOrdersByCountry(String country) {
-        return orderRepository.findAll()
-                .stream()
-                .filter(orderEntity -> orderEntity.getShipCountry().contains(country))
-                .map(this::convertOrderEntityToOrderDTO)
-                .collect(Collectors.toList());
+        try {
+            return orderRepository.findAll()
+                    .stream()
+                    .filter(orderEntity -> orderEntity.getShipCountry().contains(country))
+                    .map(this::convertOrderEntityToOrderDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "country not found", e);
+        }
     }
 
     public List<OrderDTO> getOrdersByShippedDate(Instant shipDate) {
-        return orderRepository.findAll()
-                .stream()
-                .filter(orderEntity -> orderEntity.getShippedDate().equals(shipDate))
-                .map(this::convertOrderEntityToOrderDTO)
-                .collect(Collectors.toList());
+        try {
+            return orderRepository.findAll()
+                    .stream()
+                    .filter(orderEntity -> orderEntity.getShippedDate().equals(shipDate))
+                    .map(this::convertOrderEntityToOrderDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ship dates not found", e);
+        }
     }
 
     public List<OrderDTO> getOrdersByOrderDate(Instant orderDate) {
-        return orderRepository.findAll()
-                .stream()
-                .filter(orderEntity -> orderEntity.getOrderDate().equals(orderDate))
-                .map(this::convertOrderEntityToOrderDTO)
-                .collect(Collectors.toList());
+        try {
+            return orderRepository.findAll()
+                    .stream()
+                    .filter(orderEntity -> orderEntity.getOrderDate().equals(orderDate))
+                    .map(this::convertOrderEntityToOrderDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "order date not found", e);
+        }
     }
 
     public List<OrderDTO> getOrdersByEmployeeId(Integer employeeId) {
-        return orderRepository.findAll()
-                .stream()
-                .filter(orderEntity -> orderEntity.getEmployeeID().getId().equals(employeeId))
-                .map(this::convertOrderEntityToOrderDTO)
-                .collect(Collectors.toList());
+        try {
+            return orderRepository.findAll()
+                    .stream()
+                    .filter(orderEntity -> orderEntity.getEmployeeID().getId().equals(employeeId))
+                    .map(this::convertOrderEntityToOrderDTO)
+                    .collect(Collectors.toList());
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "employee id not found", e);
+        }
     }
 
     private OrderDTO convertOrderEntityToOrderDTO(OrderEntity order) {
