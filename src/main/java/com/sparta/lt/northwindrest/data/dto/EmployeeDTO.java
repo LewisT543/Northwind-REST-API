@@ -1,4 +1,4 @@
-package com.sparta.lt.northwindrest.data.dtos;
+package com.sparta.lt.northwindrest.data.dto;
 
 public class EmployeeDTO {
     private Integer employeeId;

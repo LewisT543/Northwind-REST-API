@@ -1,6 +1,6 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.data.dtos.ProductDTO;
+import com.sparta.lt.northwindrest.data.dto.ProductDTO;
 import com.sparta.lt.northwindrest.data.mappingservices.ProductMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

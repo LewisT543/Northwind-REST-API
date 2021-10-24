@@ -1,6 +1,4 @@
-package com.sparta.lt.northwindrest.data.dtos;
-
-import com.sparta.lt.northwindrest.entities.CustomerEntity;
+package com.sparta.lt.northwindrest.data.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -37,9 +35,6 @@ public class OrderDTO {
 
     public void setOrderDate(Instant orderDate) {
         this.orderDate = orderDate;
-    }
-    public Instant getShipDate() {
-        return shipDate;
     }
 
     public void setShipDate(Instant shipDate) {

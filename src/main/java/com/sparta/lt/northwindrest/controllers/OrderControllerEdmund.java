@@ -1,8 +1,8 @@
 //package com.sparta.lt.northwindrest.controllers;
 //
 //
-//import com.sparta.lt.northwindrest.data.mappingservices.EmployeeMapService;
-//import com.sparta.lt.northwindrest.data.mappingservices.OrderMapService;
+//import com.sparta.lt.northwindrest.data.mappingservices.basic.EmployeeMapService;
+//import com.sparta.lt.northwindrest.data.mappingservices.basic.OrderMapService;
 //import com.sparta.lt.northwindrest.entities.OrderEntity;
 //import com.sparta.lt.northwindrest.repositories.OrderRepository;
 //import com.sparta.lt.northwindrest.util.Util;

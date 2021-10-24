@@ -1,7 +1,5 @@
 package com.sparta.lt.northwindrest.entities;
 
-import com.sparta.lt.northwindrest.data.dtos.CustomerDTO;
-
 import javax.persistence.*;
 
 @Table(name = "customers", indexes = {

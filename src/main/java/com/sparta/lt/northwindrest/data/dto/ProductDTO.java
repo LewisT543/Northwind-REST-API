@@ -1,4 +1,4 @@
-package com.sparta.lt.northwindrest.data.dtos;
+package com.sparta.lt.northwindrest.data.dto;
 
 import java.math.BigDecimal;
 

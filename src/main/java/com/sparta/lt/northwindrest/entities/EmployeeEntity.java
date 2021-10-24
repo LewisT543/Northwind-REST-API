@@ -1,7 +1,5 @@
 package com.sparta.lt.northwindrest.entities;
 
-import com.sparta.lt.northwindrest.data.dtos.EmployeeDTO;
-
 import javax.persistence.*;
 import java.time.Instant;
 

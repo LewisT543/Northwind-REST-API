@@ -1,6 +1,6 @@
 package com.sparta.lt.northwindrest.data.mappingservices;
 
-import com.sparta.lt.northwindrest.data.dtos.CustomerDTO;
+import com.sparta.lt.northwindrest.data.dto.CustomerDTO;
 import com.sparta.lt.northwindrest.entities.CustomerEntity;
 import com.sparta.lt.northwindrest.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

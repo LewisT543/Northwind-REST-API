@@ -1,6 +1,6 @@
 package com.sparta.lt.northwindrest.data.mappingservices;
 
-import com.sparta.lt.northwindrest.data.dtos.OrderDTO;
+import com.sparta.lt.northwindrest.data.dto.OrderDTO;
 import com.sparta.lt.northwindrest.entities.OrderEntity;
 import com.sparta.lt.northwindrest.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class OrderMapService {
     public List<OrderDTO> getAllOrderDTO() {
         return orderRepository.findAll()
                 .stream()
-                .map(this::convertOrderEntityToOrderDTO)
+                .map(this::convertOrderEntityToBasicOrderDTO)
                 .collect(Collectors.toList());
     }
 
@@ -27,7 +27,7 @@ public class OrderMapService {
         return orderRepository.findAll()
                 .stream()
                 .filter(orderEntity -> orderEntity.getCustomerID().getId().equals(customerId))
-                .map(this::convertOrderEntityToOrderDTO)
+                .map(this::convertOrderEntityToBasicOrderDTO)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +35,7 @@ public class OrderMapService {
         return orderRepository.findAll()
                 .stream()
                 .filter(orderEntity -> orderEntity.getShipCountry().contains(country))
-                .map(this::convertOrderEntityToOrderDTO)
+                .map(this::convertOrderEntityToBasicOrderDTO)
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +43,7 @@ public class OrderMapService {
         return orderRepository.findAll()
                 .stream()
                 .filter(orderEntity -> orderEntity.getShippedDate().equals(shipDate))
-                .map(this::convertOrderEntityToOrderDTO)
+                .map(this::convertOrderEntityToBasicOrderDTO)
                 .collect(Collectors.toList());
     }
 
@@ -51,7 +51,7 @@ public class OrderMapService {
         return orderRepository.findAll()
                 .stream()
                 .filter(orderEntity -> orderEntity.getOrderDate().equals(orderDate))
-                .map(this::convertOrderEntityToOrderDTO)
+                .map(this::convertOrderEntityToBasicOrderDTO)
                 .collect(Collectors.toList());
     }
 
@@ -59,20 +59,20 @@ public class OrderMapService {
         return orderRepository.findAll()
                 .stream()
                 .filter(orderEntity -> orderEntity.getEmployeeID().getId().equals(employeeId))
-                .map(this::convertOrderEntityToOrderDTO)
+                .map(this::convertOrderEntityToBasicOrderDTO)
                 .collect(Collectors.toList());
     }
 
-    private OrderDTO convertOrderEntityToOrderDTO(OrderEntity order) {
-        OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setOrderId(order.getId());
-        orderDTO.setCustomerName(order.getCustomerID().getCompanyName());
-        orderDTO.setOrderDate(order.getOrderDate());
-        orderDTO.setShipDate(order.getShippedDate());
-        orderDTO.setEmployee(order.getEmployeeID().getFirstName() + " " + order.getEmployeeID().getLastName());
-        orderDTO.setFreight(order.getFreight());
-        orderDTO.setShipCompanyName(order.getShipVia().getCompanyName());
-        orderDTO.setShipCountry(order.getShipCountry());
-        return orderDTO;
+    private OrderDTO convertOrderEntityToBasicOrderDTO(OrderEntity order) {
+        OrderDTO orderDTOBasic = new OrderDTO();
+        orderDTOBasic.setOrderId(order.getId());
+        orderDTOBasic.setCustomerName(order.getCustomerID().getCompanyName());
+        orderDTOBasic.setOrderDate(order.getOrderDate());
+        orderDTOBasic.setShipDate(order.getShippedDate());
+        orderDTOBasic.setEmployee(order.getEmployeeID().getFirstName() + " " + order.getEmployeeID().getLastName());
+        orderDTOBasic.setFreight(order.getFreight());
+        orderDTOBasic.setShipCompanyName(order.getShipVia().getCompanyName());
+        orderDTOBasic.setShipCountry(order.getShipCountry());
+        return orderDTOBasic;
     }
 }

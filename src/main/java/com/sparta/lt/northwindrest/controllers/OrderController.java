@@ -1,7 +1,6 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.data.dtos.EmployeeDTO;
-import com.sparta.lt.northwindrest.data.dtos.OrderDTO;
+import com.sparta.lt.northwindrest.data.dto.OrderDTO;
 import com.sparta.lt.northwindrest.data.mappingservices.OrderMapService;
 import com.sparta.lt.northwindrest.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
