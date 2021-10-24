@@ -1,34 +1,30 @@
 package com.sparta.northwindrest.controllers;
 
-import com.sparta.northwindrest.entities.CategoryEntity;
-import com.sparta.northwindrest.repositories.CategoryRepository;
+import com.sparta.northwindrest.data.dtos.CategoryDTO;
+import com.sparta.northwindrest.data.mappingservices.CategoryMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class CategoryController {
-    private final CategoryRepository categoryRepository;
+    private CategoryMapService categoryMapService;
 
     @Autowired
-    CategoryController(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    CategoryController(CategoryMapService categoryMapService) {
+        this.categoryMapService = categoryMapService;
     }
 
     @GetMapping("/northwind/categories")
-    public List<CategoryEntity> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> getAllCategories() {
+        return categoryMapService.getCategoryDescriptions();
     }
 
     @GetMapping("/northwind/categories/{categoryId}")
-    public List<CategoryEntity> getCategoriesById(@PathVariable int categoryId) {
-        return categoryRepository.findAll()
-                .stream()
-                .filter(categoryEntity -> categoryEntity.getId().equals(categoryId))
-                .collect(Collectors.toList());
+    public List<CategoryDTO> getCategoriesById(@PathVariable int categoryId) {
+        return categoryMapService.getCategoryDescriptionsById(categoryId);
     }
 }

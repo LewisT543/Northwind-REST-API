@@ -1,5 +1,6 @@
 package com.sparta.northwindrest.data.mappingservices;
 
+import com.sparta.northwindrest.data.dtos.CustomerDTO;
 import com.sparta.northwindrest.entities.CustomerEntity;
 import com.sparta.northwindrest.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +75,6 @@ public class CustomerMapService {
     }
 
     private CustomerDTO convertCustomerEntityToCustomerDTO(CustomerEntity customer) {
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setContactName(customer.getContactName());
-        customerDTO.setCompanyName(customer.getCompanyName());
-        customerDTO.setContactTitle(customer.getContactTitle());
-        customerDTO.setCity(customer.getCity());
-        customerDTO.setCountry(customer.getCountry());
-        return customerDTO;
+        return new CustomerDTO(customer);
     }
 }
