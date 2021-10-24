@@ -1,5 +1,7 @@
 package com.sparta.lt.northwindrest.controllers;
 
+import com.sparta.lt.northwindrest.data.dtos.CategoryDescriptionDTO;
+import com.sparta.lt.northwindrest.data.mappingservices.CategoryService;
 import com.sparta.lt.northwindrest.entities.CategoryEntity;
 import com.sparta.lt.northwindrest.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +14,18 @@ import java.util.stream.Collectors;
 
 @RestController
 public class CategoryController {
-    private final CategoryRepository categoryRepository;
 
     @Autowired
-    CategoryController(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    private CategoryService categoryService;
+    private CategoryRepository categoryRepository;
 
     @GetMapping("/northwind/categories")
-    public List<CategoryEntity> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDescriptionDTO> getCategoryDescriptions() {
+        return categoryService.getCategoryDescriptions();
     }
 
-    @GetMapping("/northwind/categories/{categoryId}")
-    public List<CategoryEntity> getCategoriesById(@PathVariable Integer categoryId) {
-        return categoryRepository.findAll()
-                .stream()
-                .filter(categoryEntity -> categoryEntity.getId().equals(categoryId))
-                .collect(Collectors.toList());
+    @GetMapping("/northwind/categories/{id}")
+    public List<CategoryDescriptionDTO> getCategoryDescriptionsById(@PathVariable Integer id) {
+        return categoryService.getCategoryDescriptionsById(id);
     }
 }
