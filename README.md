@@ -28,7 +28,7 @@ The endpoints can be accessed by adding any of the following after the base URL.
 - /territories, /territories/{territoryId}, \<name>, \<region>
 
   ## Testing
-  Currently no unit tests on account of me not knowing what I am doing.
+  Currently no unit tests,
   Manual testing for each unique endpoint (a range of values for larger range endpoints).
 
   ## Future to-do
