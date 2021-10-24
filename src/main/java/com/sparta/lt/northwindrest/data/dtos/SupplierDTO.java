@@ -1,18 +1,42 @@
 package com.sparta.lt.northwindrest.data.dtos;
 
-public class SupplierDTO {
-    private String supplierName;
-    private String contactName;
-    private String contactTitle;
-    private String country;
-    private String city;
+import com.sparta.lt.northwindrest.entities.SupplierEntity;
 
-    public String getSupplierName() {
-        return supplierName;
+public class SupplierDTO {
+
+    private int supplierID;
+    private String companyName, contactName, contactTitle;
+    private String address, city, region, postalCode, country;
+    private String phone, fax;
+
+    public SupplierDTO(SupplierEntity supplierEntity) {
+        supplierID = supplierEntity.getId();
+        companyName = supplierEntity.getCompanyName();
+        contactName = supplierEntity.getContactName();
+        contactTitle = supplierEntity.getContactTitle();
+        address = supplierEntity.getAddress();
+        city = supplierEntity.getCity();
+        region = supplierEntity.getRegion();
+        postalCode = supplierEntity.getPostalCode();
+        country = supplierEntity.getCountry();
+        phone = supplierEntity.getPhone();
+        fax = supplierEntity.getFax();
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public int getSupplierID() {
+        return supplierID;
+    }
+
+    public void setSupplierID(int supplierID) {
+        this.supplierID = supplierID;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getContactName() {
@@ -31,12 +55,12 @@ public class SupplierDTO {
         this.contactTitle = contactTitle;
     }
 
-    public String getCountry() {
-        return country;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {
@@ -45,5 +69,45 @@ public class SupplierDTO {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 }
