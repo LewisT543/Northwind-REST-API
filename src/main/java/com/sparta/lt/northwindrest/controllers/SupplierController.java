@@ -1,17 +1,15 @@
 package com.sparta.lt.northwindrest.controllers;
 
-import com.sparta.lt.northwindrest.dto.SupplierDTO;
 import com.sparta.lt.northwindrest.entities.SupplierEntity;
 import com.sparta.lt.northwindrest.mappers.SupplierMapService;
 import com.sparta.lt.northwindrest.repositories.SupplierRepository;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-// TODO: add encoding/decoding to deal with whitespaces -> %20
 
 @RestController
 public class SupplierController {
@@ -79,7 +77,10 @@ public class SupplierController {
         }
 
         return suppliers;
+    }  
+
+    @GetMapping("/northwind/suppliers")
+    public List<SupplierDTO> getAllSuppliers() {
+        return supplierMapService.getAllSupplierDTO();
     }
-
-
 }

@@ -28,25 +28,60 @@ public class OrderController {
         return orderMapService.getOrdersByCustomer(customerId);
     }
 
-    @GetMapping(value="/northwind/orders", params={"country"})
-    public List<OrderDTO> getOrdersByCountry(@RequestParam String country) {
-        return orderMapService.getOrdersByCountry(country);
+    @GetMapping("/northwind/orders/{orderID}")
+    public Optional<OrderEntity> getOrderByID(Integer orderID) {
+        return orderRepository.findById(orderID);
     }
 
-    // This is broken -> Must allow for inputs of format (dd-MM-YYYY)
-    @GetMapping(value="/northwind/orders", params={"shippedDate"})
-    public List<OrderDTO> getOrdersByShippedDate(@RequestParam Instant shipDate) {
-        // Do date processing here
-        return orderMapService.getOrdersByShippedDate(shipDate);
+    @GetMapping("/northwind/orders/customer/{customerID}")
+    public List<OrderEntity> getOrdersCustomerID(String customerID) {
+        return orderRepository.findAll()
+                .stream()
+                .filter((o) -> o.getCustomerID().contains(customerID))
+                .collect(Collectors.toList());
     }
 
-    // This is broken -> Must allow for inputs of format (dd-MM-YYYY)
-    @GetMapping(value="/northwind/orders", params={"orderDate"})
-    public List<OrderDTO> getOrdersByOrderDate(@RequestParam Instant orderDate) {
-        // Do date processing here
-        return orderMapService.getOrdersByOrderDate(orderDate);
+    //TODO: Null handling
+    @GetMapping("/northwind/orders/location")
+    public List<OrderEntity> getOrdersByCountryAndRegion(String country, String region) {
+        if (country != null && region != null) {
+            List<OrderEntity> results = new ArrayList<>();
+            for (OrderEntity o : orderRepository.findAll()) {
+                if (o.getShipCountry() != null && o.getShipRegion() != null) {
+                    if (o.getShipCountry().contains(country) && o.getShipRegion().contains(region)) {
+                        results.add(o);
+                    }
+                }
+            }
+            return results;
+        } else if (region == null) {
+            return orderRepository.findAll()
+                    .stream()
+                    .filter((o) -> o.getShipCountry().contains(country))
+                    .collect(Collectors.toList());
+        } else return null;
     }
 
+    @GetMapping("/northwind/orders/date")
+    public List<OrderEntity> getOrdersByDate(String orderDate, String shippedDate) {
+        if (orderDate != null && shippedDate != null) {
+            List<OrderEntity> results = new ArrayList<>();
+            for (OrderEntity o: orderRepository.findAll()) {
+                if (o.getOrderDate() != null && o.getShippedDate() != null) {
+                    if(o.getOrderDate().equals(Util.getDateAsInstant(orderDate))
+                            && o.getShippedDate().equals(Util.getDateAsInstant(shippedDate))) {
+                        results.add(o);
+                    }
+                }
+            }
+            return results;
+        } else if (shippedDate == null) {
+            return orderRepository.findAll()
+                    .stream()
+                    .filter((o) -> o.getOrderDate().equals(Util.getDateAsInstant(orderDate)))
+                    .collect(Collectors.toList());
+        } else return null;
+      
     @GetMapping(value="/northwind/orders", params={"employeeId"})
     public List<OrderDTO> getOrdersByEmployeeId(@RequestParam Integer employeeId) {
         return orderMapService.getOrdersByEmployeeId(employeeId);
