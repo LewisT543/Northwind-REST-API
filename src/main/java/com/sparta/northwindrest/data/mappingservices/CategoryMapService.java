@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,30 +19,40 @@ public class CategoryMapService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    public void setCategoryRepository(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
     public List<CategoryDTO> getCategoryDescriptions() {
-        try {
         return categoryRepository.findAll()
                 .stream()
-                .map(this::convertToCategoryDTO)
+                .map(this::convertToCategoryDescriptionDTO)
                 .collect(Collectors.toList());
-        } catch (ResourceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
-        }
     }
 
-    public List<CategoryDTO> getCategoryDescriptionsById(int id) {
-        try {
-        return categoryRepository.findAll()
+    public List<CategoryDTO> getCategoryDescriptionsById(Integer id) {
+        return categoryRepository.findById(id)
                 .stream()
-                .filter(categoryEntity -> categoryEntity.getId().equals(id))
-                .map(this::convertToCategoryDTO)
+                .map(this::convertToCategoryDescriptionDTO)
                 .collect(Collectors.toList());
-        } catch (ResourceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category id not found", e);
-        }
     }
 
-    private CategoryDTO convertToCategoryDTO(CategoryEntity categoryEntity) {
+    public List<CategoryDTO> getCategoryDescriptionsByKeyword(List<String> keywords) {
+        List<CategoryEntity> entities = new ArrayList<>();
+        for (String keyword : keywords) {
+            for (CategoryEntity entity : categoryRepository.findAll()) {
+                String k = keyword.toLowerCase();
+                if (entity.getCategoryName().toLowerCase().contains(k) || entity.getDescription().toLowerCase().contains(k)) {
+                    if(!entities.contains(entity)) {
+                        entities.add(entity);
+                    }
+                }
+            }
+        }
+        return entities.stream().map(this::convertToCategoryDescriptionDTO).collect(Collectors.toList());
+    }
+
+    private CategoryDTO convertToCategoryDescriptionDTO(CategoryEntity categoryEntity) {
         return new CategoryDTO(categoryEntity);
     }
 
